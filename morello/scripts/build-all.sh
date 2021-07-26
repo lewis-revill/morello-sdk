@@ -1,17 +1,17 @@
 #!/usr/bin/env bash
 
-PWD=$(pwd)
+CURR_DIR=$(pwd)
 
 # Download LLVM and musl for Morello
-${PWD}/scripts/download-llvm-musl.sh
+${CURR_DIR}/scripts/download-llvm-musl.sh
 
 # Build Musl
-${PWD}/scripts/build-musl.sh
+${CURR_DIR}/scripts/build-musl.sh
 
 # Build morello_elf
-cd ${PWD}/tools
+cd ${CURR_DIR}/tools
 make
 
 # Build test-app
-cd ${PWD}/test-app
+cd ${CURR_DIR}/test-app
 make
