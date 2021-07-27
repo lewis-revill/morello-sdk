@@ -1,11 +1,13 @@
 # Morello bootstrap scripts
 
 ## Pre-requisites
-A **Debian based aarch64** environment with **network access** and this repository available inside.  
+A **Debian 10 based aarch64** environment with **network access** and this repository available inside.  
 Make sure you have around 4GB of available disk space for the whole process.
 
+The scripts have not been tested in other environments, although any aarch64 based Linux should work.
+
 ## Setting up the build environment
-`# apt install git build-essential`
+`# apt install git build-essential python3`
 
 ## Building
 ### Quick build:
