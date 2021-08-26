@@ -12,7 +12,7 @@ all:
 	$(CC) -c -g -nostdinc -isystem ../musl-bin/include \
 		-march=morello+c64 -mabi=purecap main.c -o $(OUT)/main.c.o \
 		--target=$(TARGET)
-	$(CC) --target=$(TARGET) -fuse-ld=lld -Wl,--morello-c64-plt \
+	$(CC) --target=$(TARGET) -fuse-ld=lld -march=morello+c64 -mabi=purecap \
 		../musl-bin/lib/crt1.o \
 		../musl-bin/lib/crti.o \
 		../llvm/lib/clang/11.0.0/lib/linux/clang_rt.crtbegin-morello.o \
