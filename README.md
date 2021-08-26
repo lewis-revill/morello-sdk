@@ -18,6 +18,7 @@ If cross compiling on x86 you also need:
 cd morello-aarch64/morello
 ./scripts/build-all.sh
 ```
+Which will perform a full build on a native (aarch64) host. You can optionally pass --cross to `build-all.sh` to do a cross-build from an x86_64 host.
 
 On success, your binary is `morello-aarch64/morello/bin/main`.
 
@@ -30,7 +31,8 @@ Sourcing this sets up $PATH such that the Morello supporting LLVM overshadows th
 
 1. `scripts/build-all.sh`: Runs all steps in sequence  
 Download and compile everything.
-Accepts either --cross or --native. The --native switch downloads and builds everything from an aarch64 host. 
+Accepts either --cross or --native. The default is --native and is assumed if neither is specified.  
+The --native switch downloads and builds everything from an aarch64 host.  
 Passing --cross assumes an x86\_64 host
 
 1. `scripts/download-llvm-musl.sh`: Download required tools  
