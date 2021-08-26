@@ -4,12 +4,15 @@ CMP=cmp -l
 GAWK=gawk
 
 OUT=../bin
+# we want the same result no matter where we're compiling
+TARGET?=aarch64-linux-gnu
 
 all:
 	mkdir -p $(OUT)
 	$(CC) -c -g -nostdinc -isystem ../musl-bin/include \
-		-march=morello+c64 -mabi=purecap main.c -o $(OUT)/main.c.o
-	$(CC) -fuse-ld=lld -Wl,--morello-c64-plt \
+		-march=morello+c64 -mabi=purecap main.c -o $(OUT)/main.c.o \
+		--target=$(TARGET)
+	$(CC) --target=$(TARGET) -fuse-ld=lld -Wl,--morello-c64-plt \
 		../musl-bin/lib/crt1.o \
 		../musl-bin/lib/crti.o \
 		../llvm/lib/clang/11.0.0/lib/linux/clang_rt.crtbegin-morello.o \
