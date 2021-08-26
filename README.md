@@ -9,11 +9,13 @@ The scripts have not been tested in other environments, although any aarch64 bas
 ## Setting up the build environment
 `# apt install git build-essential python3`
 
+If cross compiling on x86 you also need:  
+`# apt install libtinfo5 linux-libc-dev-arm64-cross`
+
 ## Building
 ### Quick build:
 ```
 cd morello-aarch64/morello
-source ./env/morello-aarch64
 ./scripts/build-all.sh
 ```
 
@@ -27,10 +29,13 @@ Sourcing this sets up $PATH such that the Morello supporting LLVM overshadows th
 **Required for steps 4 to 6**  
 
 1. `scripts/build-all.sh`: Runs all steps in sequence  
-Download and compile everything. Requires step 1.  
+Download and compile everything.
+Accepts either --cross or --native. The --native switch downloads and builds everything from an aarch64 host. 
+Passing --cross assumes an x86\_64 host
 
 1. `scripts/download-llvm-musl.sh`: Download required tools  
 This clones a binary release of LLVM to `llvm`, its sources to `llvm-project` and the musl sources to `musl`.  
+Accepts a variable MODE={native, cross} and will checkout aarch64 or x86\_64 binaries respectively.  
 **NOTE**: this **downloads about 3GB** of stuff. This can be done on another machine and copied over for speed.  
 
 1. `scripts/build-musl.sh`: Build Musl  
