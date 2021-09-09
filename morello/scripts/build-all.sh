@@ -22,7 +22,8 @@ esac
 done
 
 if [ "$MODE" = "native" -a $(uname -m) != "aarch64" ]; then
-    echo "WARNING: attempting a native build NOT on an arm cpu";
+    echo "ERROR: attempting a native build NOT on an arm cpu";
+    exit 1
 fi
 
 CURR_DIR=$(pwd)
