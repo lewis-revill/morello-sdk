@@ -29,8 +29,8 @@ fi
 CURR_DIR=$(pwd)
 export MODE
 
-# Download LLVM and musl for Morello
-${CURR_DIR}/scripts/download-llvm-musl.sh
+# Configure LLVM and musl for Morello
+${CURR_DIR}/scripts/configure-llvm-musl.sh
 
 # Build Musl
 ${CURR_DIR}/scripts/build-musl.sh
