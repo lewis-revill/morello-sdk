@@ -27,8 +27,6 @@ fi
 
 CURR_DIR=$(pwd)
 export MODE
-# add the things we need to the path
-source ./env/morello-aarch64
 
 # Download LLVM and musl for Morello
 ${CURR_DIR}/scripts/download-llvm-musl.sh

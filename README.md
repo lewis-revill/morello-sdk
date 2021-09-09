@@ -16,6 +16,7 @@ If cross compiling on x86 you also need:
 ### Quick build:
 ```
 cd morello-aarch64/morello
+source ./env/morello-aarch64
 ./scripts/build-all.sh
 ```
 Which will perform a full build on a native (aarch64) host. You can optionally pass --cross to `build-all.sh` to do a cross-build from an x86_64 host.
