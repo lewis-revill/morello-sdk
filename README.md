@@ -6,6 +6,8 @@ Make sure you have around 4GB of available disk space for the whole process.
 
 The scripts have not been tested in other environments, although any aarch64 based Linux should work.
 
+**Requirements:** GIT 1.8.2 (for submodule branch support).
+
 ## Setting up the build environment
 `# apt install git build-essential python3`
 

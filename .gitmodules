@@ -1,0 +1,9 @@
+[submodule "morello/llvm"]
+	path = morello/llvm
+	url = https://git.morello-project.org/morello/llvm-project-releases.git
+[submodule "morello/llvm-project"]
+	path = morello/llvm-project
+	url = https://git.morello-project.org/morello/llvm-project.git
+[submodule "morello/musl"]
+	path = morello/musl
+	url = https://git.morello-project.org/morello/musl-libc.git
