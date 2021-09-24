@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# SPDX-License-Identifier: BSD-3-Clause
+
 # we want the same result no matter where we're compiling
 
 mkdir -p bin

@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: BSD-3-Clause
+
 CC=clang
 ELF_PATCH=morello_elf
 CMP=cmp -l
