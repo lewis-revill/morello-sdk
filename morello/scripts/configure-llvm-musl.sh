@@ -23,7 +23,7 @@ git submodule update --remote --merge
 (cd ${CURR_DIR}/llvm; git checkout $BRANCH)
 
 # Config Clang sources to build compiler-rt for Morello
-(cd ${CURR_DIR}/llvm-project; git checkout morello/release-$MORELLO_COMPILER_VERSION)
+(cd ${CURR_DIR}/llvm-project; git checkout morello/release-$MORELLO_COMPILER_SOURCE_VERSION)
 
 # Config Musl
 (cd ${CURR_DIR}/musl; git checkout morello/master)
