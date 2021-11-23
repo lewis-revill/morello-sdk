@@ -17,6 +17,7 @@ fi
 
 # Populate repositories
 git submodule update --init --recursive --progress
+git submodule update --remote --merge
 
 # Config Clang
 (cd ${CURR_DIR}/llvm; git checkout $BRANCH)

@@ -3,6 +3,15 @@
 # SPDX-License-Identifier: BSD-3-Clause
 
 MODE="native"
+CURR_DIR=$(pwd)
+PRJ_BIN=$(realpath $(pwd)/bin)
+MUSL_BIN=$(realpath $(pwd)/musl-bin)
+COMPILER_RT_BIN=$(realpath $(pwd)/compiler_rt-bin)
+
+export PRJ_BIN
+export MUSL_BIN
+export COMPILER_RT_BIN
+export MODE
 
 help () {
 cat <<EOF
@@ -15,32 +24,41 @@ EOF
 exit 0
 }
 
-for arg ; do
-case $arg in
-    --native) MODE="native" ;;
-    --cross) MODE="cross" ;;
-    --help|-h) help ;;
-esac
-done
+main () {
 
-if [ "$MODE" = "native" -a $(uname -m) != "aarch64" ]; then
-    echo "ERROR: attempting a native build NOT on an arm cpu";
-    exit 1
-fi
+	for arg ; do
+	case $arg in
+		--native) MODE="native" ;;
+		--cross) MODE="cross" ;;
+		--help|-h) help ;;
+	esac
+	done
 
-CURR_DIR=$(pwd)
-export MODE
+	if [ "$MODE" = "native" -a $(uname -m) != "aarch64" ]; then
+		echo "ERROR: attempting a native build NOT on an arm cpu";
+		exit 1
+	fi
 
-# Configure LLVM and musl for Morello
-${CURR_DIR}/scripts/configure-llvm-musl.sh
+	# Cleanup old files
+	rm -fr ${MUSL_BIN} ${COMPILER_RT_BIN} ${PRJ_BIN}
 
-# Build Musl
-${CURR_DIR}/scripts/build-musl.sh
+	# Configure LLVM and musl for Morello
+	${CURR_DIR}/scripts/configure-llvm-musl.sh
 
-# Build morello_elf
-cd ${CURR_DIR}/tools
-make
+	# Build morello_elf
+	cd ${CURR_DIR}/tools
+	make
+	cd ${CURR_DIR}
 
-# Build test-app
-cd ${CURR_DIR}/test-app
-make
+	# Build Musl
+	${CURR_DIR}/scripts/build-musl.sh
+
+	# Build Libraries
+	${CURR_DIR}/scripts/build-libraries.sh
+
+	# Build test-app
+	cd ${CURR_DIR}/test-app
+	make
+}
+
+time main $1
