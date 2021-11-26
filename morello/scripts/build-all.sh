@@ -59,6 +59,14 @@ main () {
 	# Build test-app
 	cd ${CURR_DIR}/test-app
 	make
+
+	# Build morello-heap-app
+	cd ${CURR_DIR}/morello-heap-app
+	make
+
+	# Build morello-stack-app
+	cd ${CURR_DIR}/morello-stack-app
+	make
 }
 
 time main $1
