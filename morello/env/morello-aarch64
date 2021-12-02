@@ -1,1 +1,2 @@
+export MORELLO_OLD_PATH=$PATH
 export PATH=$(pwd)/bin:$(pwd)/llvm/bin:$PATH
