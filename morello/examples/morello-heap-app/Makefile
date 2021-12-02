@@ -4,16 +4,16 @@ CC=clang
 ELF_PATCH=morello_elf
 CMP=cmp -l
 GAWK=gawk
-MUSL_LIB=../musl-bin/lib
+MUSL_LIB=../../musl-bin/lib
 CLANG_RESOURCE_DIR=$(shell clang -print-resource-dir)
 
 OUT=../bin
-# we want the same result no matter where we're compiling
+# we want the same result no matter where we're cross compiling (x86_64, aarch64)
 TARGET?=aarch64-linux-gnu
 
 all:
 	mkdir -p $(OUT)
-	$(CC) -c -g -nostdinc -isystem ../musl-bin/include \
+	$(CC) -c -g -nostdinc -isystem ../../musl-bin/include \
 		-march=morello+c64 -mabi=purecap main.c -o $(OUT)/morello-heap.c.o \
 		--target=$(TARGET)
 	$(CC) --target=$(TARGET) -fuse-ld=lld -march=morello+c64 -mabi=purecap \

@@ -1,3 +1,4 @@
 /morello/bin/
 /morello/musl-bin/
 /morello/compiler_rt-bin/
+/morello/examples/bin/

@@ -5,10 +5,12 @@
 MODE="aarch64"
 CURR_DIR=$(pwd)
 PRJ_BIN=$(realpath $(pwd)/bin)
+EXAMPLES_BIN=$(realpath $(pwd)/examples/bin)
 MUSL_BIN=$(realpath $(pwd)/musl-bin)
 COMPILER_RT_BIN=$(realpath $(pwd)/compiler_rt-bin)
 
 export PRJ_BIN
+export EXAMPLES_BIN
 export MUSL_BIN
 export COMPILER_RT_BIN
 export MODE
@@ -40,7 +42,7 @@ main () {
 	fi
 
 	# Cleanup old files
-	rm -fr ${MUSL_BIN} ${COMPILER_RT_BIN} ${PRJ_BIN}
+	rm -fr ${MUSL_BIN} ${COMPILER_RT_BIN} ${PRJ_BIN} ${EXAMPLES_BIN}
 
 	# Configure LLVM and musl for Morello
 	${CURR_DIR}/scripts/configure-llvm-musl.sh
@@ -56,16 +58,19 @@ main () {
 	# Build Libraries
 	${CURR_DIR}/scripts/build-libraries.sh
 
+	# Create examples/bin
+	mkdir -p ${EXAMPLES_BIN}
+
 	# Build test-app
-	cd ${CURR_DIR}/test-app
+	cd ${CURR_DIR}/examples/test-app
 	make
 
 	# Build morello-heap-app
-	cd ${CURR_DIR}/morello-heap-app
+	cd ${CURR_DIR}/examples/morello-heap-app
 	make
 
 	# Build morello-stack-app
-	cd ${CURR_DIR}/morello-stack-app
+	cd ${CURR_DIR}/examples/morello-stack-app
 	make
 }
 
