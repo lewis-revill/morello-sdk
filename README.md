@@ -1,7 +1,7 @@
 # Morello bootstrap scripts
 
 ## Pre-requisites
-A **Debian 10 based aarch64** environment with **network access** and this repository available inside.  
+A **Debian 10 based aarch64 or x86_64** environment with **network access** and this repository available inside.  
 Make sure you have around 4GB of available disk space for the whole process.
 
 The scripts have not been tested in other environments, although any aarch64 based Linux might work.
@@ -21,9 +21,14 @@ cd morello-aarch64/morello
 source ./env/morello-aarch64
 ./scripts/build-all.sh
 ```
-Which will perform a full cross build on aarch64 host. You can optionally pass --x86_64 to `build-all.sh` to do a cross-build from an x86_64 host.
+Which will perform a full cross build on aarch64 host. You can optionally pass `--x86_64` to `build-all.sh` to do a cross-build from an x86_64 host.
 
-On success, your binary is `morello-aarch64/morello/bin/main`.
+On success, your binary is `morello-aarch64/morello/examples/bin/main`.
+
+Note: To reset the environment to the default configuration execute:
+```
+source ./env/morello-aarch64-restore
+```
 
 ### Step by step build explanation
 In `morello-aarch64/morello`:
@@ -34,27 +39,39 @@ Sourcing this sets up $PATH such that the Morello supporting LLVM overshadows th
 
 1. `scripts/build-all.sh`: Runs all steps in sequence  
 Download and compile everything.
-Accepts either --x86_64 or --aarch64. The default is --aarch64 and is assumed if neither is specified.  
-The --aarch64 switch downloads and builds everything from an aarch64 host.  
-Passing --x86_64 assumes an x86\_64 host
+Accepts either `--x86_64` or `--aarch64`. The default is `--aarch64` and is assumed if neither is specified.  
+The `--aarch64` switch downloads and builds everything from an aarch64 host.  
+Passing `--x86_64` assumes an x86\_64 host  
 
 1. `scripts/download-llvm-musl.sh`: Download required tools  
 This clones a binary release of LLVM to `llvm`, its sources to `llvm-project` and the musl sources to `musl`.  
 Accepts a variable MODE={aarch64, x86_64} and will checkout aarch64 or x86\_64 binaries respectively.  
-**NOTE**: this **downloads about 3GB** of stuff. This can be done on another machine and copied over for speed.  
+**NOTE**: this process **downloads about 3GB**. When building on an emulator (e.g. qemu) this can be done on the host machine and copied over.  
 
 1. `scripts/build-musl.sh`: Build Musl  
-This builds llvm's compiler-rt into `llvm` and then runs `./configure && make` in musl's root directory **with libshim enabled**.  
+This runs `./configure && make` in musl's root directory **with libshim enabled**.  
 Downloads a few MB of dependencies. Takes a while.  
+
+1. `scripts/build-libraries.sh`: Build Compiler-RT  
+This script builds llvm's compiler-rt and the crt*.o objects.  
 
 1. `tools/Makefile`: Compile `morello_elf`  
 This utility sets up the ELF headers of the Morello binary. Necessary since the ELF format is not finalized yet.  
 
-1. `test-app/Makefile`: Compile a hello world program  
+1. `examples/test-app/Makefile`: Compile a hello world program  
 Compiles a simple hello world for the Morello architecture and passes it to morello\_elf.  
-Output is in `bin`.  
+Output is in `examples/bin`.  
 
-A note on the long linker command: A good general purpose guide to replacing the libc is yet to be found. To help you understand what the command does you should:
+1. `examples/morello-heap-app/Makefile`: Compile a capability based heap test program  
+Compiles a simple capability based heap test for the Morello architecture and passes it to morello\_elf.  
+Output is in `examples/bin`.  
+
+1. `examples/morello-stack-app/Makefile`: Compile a capability based stack test program  
+Compiles a simple capability based stack test for the Morello architecture and passes it to morello\_elf.  
+**NOTE** : To see the differences in behavior in between aarch64 and Morello, it is possible to recompile the same program for aarch64 and compare the results with what happens on Morello. This should point out that just recompiling the same code on Morello makes it more robust and secure.  
+Output for Morello is in `examples/bin`.  
+
+**NOTE**: Please refer to the following links to have a clear understanding of the implemented process:
 
 * refer to `man gcc` and look up each argument  
 * refer to the [gcc docs](https://gcc.gnu.org/onlinedocs/gcc/) and read through the chapters on Standards and Standard Libraries  
@@ -63,5 +80,5 @@ A note on the long linker command: A good general purpose guide to replacing the
 (crt = C RunTime)  
 
 ### Note on samba
-Building this on a samba share is possible, but wonky. The llvm builds use **symlinks** which need extra care.
+Building this on a samba share is possible, but it takes longer. The llvm builds use **symlinks** which need extra care.
 
