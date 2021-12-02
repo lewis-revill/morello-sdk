@@ -2,7 +2,7 @@
 
 # SPDX-License-Identifier: BSD-3-Clause
 
-MODE="native"
+MODE="aarch64"
 CURR_DIR=$(pwd)
 PRJ_BIN=$(realpath $(pwd)/bin)
 MUSL_BIN=$(realpath $(pwd)/musl-bin)
@@ -18,8 +18,8 @@ cat <<EOF
 Usage: $0 [options]
 
 OPTIONS:
-  --native   build on an aarch64 host [DEFAULT]
-  --cross    build on an x86_64 host
+  --aarch64   build on an aarch64 host [DEFAULT]
+  --x86_64    build on an x86_64 host
 EOF
 exit 0
 }
@@ -28,14 +28,14 @@ main () {
 
 	for arg ; do
 	case $arg in
-		--native) MODE="native" ;;
-		--cross) MODE="cross" ;;
+		--aarch64) MODE="aarch64" ;;
+		--x86_64) MODE="x86_64" ;;
 		--help|-h) help ;;
 	esac
 	done
 
-	if [ "$MODE" = "native" -a $(uname -m) != "aarch64" ]; then
-		echo "ERROR: attempting a native build NOT on an arm cpu";
+	if [ "$MODE" = "aarch64" -a $(uname -m) != "aarch64" ]; then
+		echo "ERROR: attempting an aarch64 cross build NOT on an arm cpu";
 		exit 1
 	fi
 

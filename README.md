@@ -4,7 +4,7 @@
 A **Debian 10 based aarch64** environment with **network access** and this repository available inside.  
 Make sure you have around 4GB of available disk space for the whole process.
 
-The scripts have not been tested in other environments, although any aarch64 based Linux should work.
+The scripts have not been tested in other environments, although any aarch64 based Linux might work.
 
 **Requirements:** GIT 1.8.2 (for submodule branch support).
 
@@ -21,7 +21,7 @@ cd morello-aarch64/morello
 source ./env/morello-aarch64
 ./scripts/build-all.sh
 ```
-Which will perform a full build on a native (aarch64) host. You can optionally pass --cross to `build-all.sh` to do a cross-build from an x86_64 host.
+Which will perform a full cross build on aarch64 host. You can optionally pass --x86_64 to `build-all.sh` to do a cross-build from an x86_64 host.
 
 On success, your binary is `morello-aarch64/morello/bin/main`.
 
@@ -34,13 +34,13 @@ Sourcing this sets up $PATH such that the Morello supporting LLVM overshadows th
 
 1. `scripts/build-all.sh`: Runs all steps in sequence  
 Download and compile everything.
-Accepts either --cross or --native. The default is --native and is assumed if neither is specified.  
-The --native switch downloads and builds everything from an aarch64 host.  
-Passing --cross assumes an x86\_64 host
+Accepts either --x86_64 or --aarch64. The default is --aarch64 and is assumed if neither is specified.  
+The --aarch64 switch downloads and builds everything from an aarch64 host.  
+Passing --x86_64 assumes an x86\_64 host
 
 1. `scripts/download-llvm-musl.sh`: Download required tools  
 This clones a binary release of LLVM to `llvm`, its sources to `llvm-project` and the musl sources to `musl`.  
-Accepts a variable MODE={native, cross} and will checkout aarch64 or x86\_64 binaries respectively.  
+Accepts a variable MODE={aarch64, x86_64} and will checkout aarch64 or x86\_64 binaries respectively.  
 **NOTE**: this **downloads about 3GB** of stuff. This can be done on another machine and copied over for speed.  
 
 1. `scripts/build-musl.sh`: Build Musl  

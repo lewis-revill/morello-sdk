@@ -6,12 +6,12 @@ source ./env/morello-aarch64-versions
 
 CURR_DIR=$(pwd)
 
-MODE="${MODE:-native}"
+MODE="${MODE:-aarch64}"
 BRANCH=
 
-if [ "$MODE" = "native" ]; then
+if [ "$MODE" = "aarch64" ]; then
     BRANCH="morello/linux-aarch64-release-$MORELLO_COMPILER_VERSION"
-elif [ "$MODE" = "cross" ]; then
+elif [ "$MODE" = "x86_64" ]; then
     BRANCH="morello/baremetal-release-$MORELLO_COMPILER_VERSION"
 fi
 
