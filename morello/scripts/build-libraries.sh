@@ -7,10 +7,12 @@ LLVM_PROJECT=llvm-project
 
 # Build crtbegin and crtend objects
 clang --target=aarch64-linux-gnu -march=morello+c64 -mabi=purecap \
+    -nostdinc -isystem ${MUSL_BIN}/include \
     -c ${LLVM_PROJECT}/compiler-rt/lib/crt/crtbegin.c \
     -o ${CLANG_RESOURCE_DIR}/lib/linux/clang_rt.crtbegin-morello.o
 
 clang --target=aarch64-linux-gnu -march=morello+c64 -mabi=purecap \
+    -nostdinc -isystem ${MUSL_BIN}/include \
     -c ${LLVM_PROJECT}/compiler-rt/lib/crt/crtend.c \
     -o ${CLANG_RESOURCE_DIR}/lib/linux/clang_rt.crtend-morello.o
 
