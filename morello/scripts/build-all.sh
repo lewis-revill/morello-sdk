@@ -4,15 +4,19 @@
 
 MODE="aarch64"
 CURR_DIR=$(pwd)
+MORELLO_PROJECTS=$(realpath $(pwd)/projects)
 PRJ_BIN=$(realpath $(pwd)/bin)
 EXAMPLES_BIN=$(realpath $(pwd)/examples/bin)
 MUSL_BIN=$(realpath $(pwd)/musl-bin)
 COMPILER_RT_BIN=$(realpath $(pwd)/compiler_rt-bin)
+MORELLO_ROOTFS=$(realpath $(pwd)/morello-rootfs)
 
+export MORELLO_PROJECTS
 export PRJ_BIN
 export EXAMPLES_BIN
 export MUSL_BIN
 export COMPILER_RT_BIN
+export MORELLO_ROOTFS
 export MODE
 
 help () {
@@ -42,7 +46,7 @@ main () {
 	fi
 
 	# Cleanup old files
-	rm -fr ${MUSL_BIN} ${COMPILER_RT_BIN} ${PRJ_BIN} ${EXAMPLES_BIN}
+	rm -fr ${MORELLO_ROOFS} ${MUSL_BIN} ${COMPILER_RT_BIN} ${PRJ_BIN} ${EXAMPLES_BIN}
 
 	# Configure LLVM and musl for Morello
 	${CURR_DIR}/scripts/configure-llvm-musl.sh
@@ -72,6 +76,9 @@ main () {
 	# Build morello-stack-app
 	cd ${CURR_DIR}/examples/morello-stack-app
 	make
+
+	# Build PCuABI busybox
+	${CURR_DIR}/scripts/build-busybox.sh
 }
 
 time main $1
