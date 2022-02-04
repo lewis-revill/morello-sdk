@@ -11,7 +11,7 @@ cd musl
 CC=clang ./configure \
 	--disable-shared \
 	--enable-morello \
-	--enable-libshim \
+	${LIBSHIM} \
 	--target=aarch64-linux-gnu \
 	--prefix=${MUSL_BIN}
 
