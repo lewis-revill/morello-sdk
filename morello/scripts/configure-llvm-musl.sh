@@ -26,4 +26,9 @@ git submodule update --remote --merge
 (cd ${CURR_DIR}/llvm-project; git checkout morello/release-$MORELLO_COMPILER_SOURCE_VERSION)
 
 # Config Musl
-(cd ${CURR_DIR}/musl; git fetch --all --tags; git checkout -b morello/release tags/$MORELLO_MUSL_SOURCE_TAG)
+if [ -z ${DEV_MODE+x} ]; then
+	(cd ${CURR_DIR}/musl; git fetch --all --tags; git checkout -b morello/release tags/$MORELLO_MUSL_SOURCE_TAG);
+else
+	(cd ${CURR_DIR}/musl; git checkout morello/master);
+	echo "[Experimental Mode ON]";
+fi

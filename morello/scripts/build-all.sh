@@ -4,6 +4,7 @@
 
 MODE="aarch64"
 LIBSHIM="--disable-libshim"
+DEV_MODE=""
 CURR_DIR=$(pwd)
 MORELLO_PROJECTS=$(realpath $(pwd)/projects)
 PRJ_BIN=$(realpath $(pwd)/bin)
@@ -20,6 +21,7 @@ export COMPILER_RT_BIN
 export MORELLO_ROOTFS
 export MODE
 export LIBSHIM
+export DEV_MODE
 
 help () {
 cat <<EOF
@@ -29,6 +31,7 @@ OPTIONS:
   --aarch64           build on an aarch64 host [DEFAULT]
   --x86_64            build on an x86_64 host
   --enable-libshim    enable libshim in musl
+  --dev               experimental mode (allows to use more recent versions of musl)
   --help              this help message
 EOF
 exit 0
@@ -41,6 +44,7 @@ main () {
 		--aarch64) MODE="aarch64" ;;
 		--x86_64) MODE="x86_64" ;;
 		--enable-libshim) LIBSHIM="--enable-libshim" ;;
+		--dev) DEV_MODE="on" ;;
 		--help|-h) help ;;
 	esac
 	done
