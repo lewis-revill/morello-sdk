@@ -90,6 +90,10 @@ main () {
 	cd ${CURR_DIR}/examples/morello-pthread-app
 	make
 
+	# Build morello-auxv-app
+	cd ${CURR_DIR}/examples/morello-auxv-app
+	make
+
 	# Build PCuABI busybox
 	${CURR_DIR}/scripts/build-busybox.sh
 }
