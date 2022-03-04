@@ -9,6 +9,15 @@ CURR_DIR=$(pwd)
 MODE="${MODE:-aarch64}"
 BRANCH=
 
+checkout_musl_tag () {
+	if [ $(git rev-parse --verify morello/release) ]; then
+		git checkout morello/release;
+	else
+		git fetch --all --tags;
+		git checkout -b morello/release tags/$MORELLO_MUSL_SOURCE_TAG;
+	fi
+}
+
 if [ "$MODE" = "aarch64" ]; then
     BRANCH="morello/linux-aarch64-release-$MORELLO_COMPILER_VERSION"
 elif [ "$MODE" = "x86_64" ]; then
@@ -26,8 +35,8 @@ git submodule update --remote --merge
 (cd ${CURR_DIR}/llvm-project; git checkout morello/release-$MORELLO_COMPILER_SOURCE_VERSION)
 
 # Config Musl
-if [ -z ${DEV_MODE+x} ]; then
-	(cd ${CURR_DIR}/musl; git fetch --all --tags; git checkout -b morello/release tags/$MORELLO_MUSL_SOURCE_TAG);
+if [ "$DEV_MODE" == "off" ]; then
+	(cd ${CURR_DIR}/musl; checkout_musl_tag);
 else
 	(cd ${CURR_DIR}/musl; git checkout morello/master);
 	echo "[Experimental Mode ON]";

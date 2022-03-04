@@ -4,7 +4,7 @@
 
 MODE="aarch64"
 LIBSHIM="--disable-libshim"
-DEV_MODE=""
+DEV_MODE="off"
 CURR_DIR=$(pwd)
 MORELLO_PROJECTS=$(realpath $(pwd)/projects)
 PRJ_BIN=$(realpath $(pwd)/bin)
@@ -41,6 +41,7 @@ exit 0
 }
 
 main () {
+	set +x
 
 	for arg ; do
 	case $arg in
@@ -101,4 +102,4 @@ main () {
 	${CURR_DIR}/scripts/build-busybox.sh
 }
 
-time main $1
+time main $@
