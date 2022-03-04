@@ -8,6 +8,13 @@ CURR_DIR=$(pwd)
 
 MODE="${MODE:-aarch64}"
 BRANCH=
+MUSL_DEV_COMMIT=165e4eb5f0b8b6a3707771278860f7e518345fd6
+
+reset_musl_dev () {
+	if [ ! -z ${MUSL_DEV_COMMIT} ]; then
+		git reset --hard ${MUSL_DEV_COMMIT};
+	fi
+}
 
 checkout_musl_tag () {
 	if [ $(git rev-parse --verify morello/release) ]; then
@@ -42,6 +49,6 @@ fi
 if [ "$DEV_MODE" == "off" ]; then
 	(cd ${CURR_DIR}/musl; checkout_musl_tag);
 else
-	(cd ${CURR_DIR}/musl; git checkout morello/master);
+	(cd ${CURR_DIR}/musl; git checkout morello/master; reset_musl_dev);
 	echo "[Experimental Mode ON]";
 fi
