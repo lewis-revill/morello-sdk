@@ -12,6 +12,8 @@ EXAMPLES_BIN=$(realpath $(pwd)/examples/bin)
 MUSL_BIN=$(realpath $(pwd)/musl-bin)
 COMPILER_RT_BIN=$(realpath $(pwd)/compiler_rt-bin)
 MORELLO_ROOTFS=$(realpath $(pwd)/morello-rootfs)
+NCORES=$(grep -c ^processor /proc/cpuinfo)
+_NCORES=$(($NCORES / 2))
 
 export MORELLO_PROJECTS
 export PRJ_BIN
@@ -22,6 +24,7 @@ export MORELLO_ROOTFS
 export MODE
 export LIBSHIM
 export DEV_MODE
+export _NCORES
 
 help () {
 cat <<EOF
