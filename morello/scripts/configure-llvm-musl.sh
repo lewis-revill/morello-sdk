@@ -24,9 +24,13 @@ elif [ "$MODE" = "x86_64" ]; then
     BRANCH="morello/baremetal-release-$MORELLO_COMPILER_VERSION"
 fi
 
-# Populate repositories
-git submodule update --init --recursive --progress
-git submodule update --remote --merge
+if [ ! -f "${CURR_DIR}/.llvm-env" ]; then
+	# Populate repositories
+	git submodule update --init --recursive --progress
+	git submodule update --remote --merge
+
+	touch ${CURR_DIR}/.llvm-env
+fi
 
 # Config Clang
 (cd ${CURR_DIR}/llvm; git checkout $BRANCH)
