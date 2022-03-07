@@ -36,8 +36,8 @@ int main() {
         return 1;
     }
 
-    if (thread_ret != MAGIC) {
-        printf("ERROR: thread returned with wrong value 0x%lx != 0x%lx\n", thread_ret, MAGIC);
+    if (thread_ret != (void *) MAGIC) {
+        printf("ERROR: thread returned with wrong value %p != %p\n", thread_ret, (void *) MAGIC);
         return 1;
     }
 
