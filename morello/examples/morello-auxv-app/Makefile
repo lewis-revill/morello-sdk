@@ -26,7 +26,7 @@ all:
 		$(MUSL_LIB)/crtn.o \
 		-nostdlib -L$(MUSL_LIB) -lc -o $(OUT)/morello-auxv -static
 	$(ELF_PATCH) $(OUT)/morello-auxv
+	rm $(OUT)/morello-auxv.c.o
 
 clean:
-	rm $(OUT)/morello-auxv.c.o
 	rm $(OUT)/morello-auxv

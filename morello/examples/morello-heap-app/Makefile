@@ -26,7 +26,7 @@ all:
 		$(MUSL_LIB)/crtn.o \
 		-nostdlib -L$(MUSL_LIB) -lc -o $(OUT)/morello-heap -static
 	$(ELF_PATCH) $(OUT)/morello-heap
+	rm $(OUT)/morello-heap.c.o
 
 clean:
-	rm $(OUT)/morello-heap.c.o
 	rm $(OUT)/morello-heap

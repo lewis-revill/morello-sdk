@@ -27,7 +27,7 @@ all:
 		-nostdlib -L$(MUSL_LIB) -lc -o $(OUT)/morello-stack -static \
 		-fno-stack-protector
 	$(ELF_PATCH) $(OUT)/morello-stack
+	rm $(OUT)/morello-stack.c.o
 
 clean:
-	rm $(OUT)/morello-stack.c.o
 	rm $(OUT)/morello-stack

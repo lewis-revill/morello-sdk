@@ -26,7 +26,7 @@ all:
 		$(MUSL_LIB)/crtn.o \
 		-nostdlib -L$(MUSL_LIB) -lc -o $(OUT)/morello-pthread -static
 	$(ELF_PATCH) $(OUT)/morello-pthread
+	rm $(OUT)/morello-pthread.c.o
 
 clean:
-	rm $(OUT)/morello-pthread.c.o
 	rm $(OUT)/morello-pthread
