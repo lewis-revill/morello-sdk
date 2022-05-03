@@ -5,6 +5,7 @@
 MODE="aarch64"
 LIBSHIM="--disable-libshim"
 DEV_MODE="off"
+DOCKER="off"
 CURR_DIR=$(pwd)
 MORELLO_PROJECTS=$(realpath $(pwd)/projects)
 PRJ_BIN=$(realpath $(pwd)/bin)
@@ -12,6 +13,7 @@ EXAMPLES_BIN=$(realpath $(pwd)/examples/bin)
 MUSL_BIN=$(realpath $(pwd)/musl-bin)
 COMPILER_RT_BIN=$(realpath $(pwd)/compiler_rt-bin)
 MORELLO_ROOTFS=$(realpath $(pwd)/morello-rootfs)
+MORELLO_DOCKER=$(realpath $(pwd)/morello-docker)
 NCORES=$(grep -c ^processor /proc/cpuinfo)
 _NCORES=$(($NCORES / 2))
 
@@ -21,9 +23,11 @@ export EXAMPLES_BIN
 export MUSL_BIN
 export COMPILER_RT_BIN
 export MORELLO_ROOTFS
+export MORELLO_DOCKER
 export MODE
 export LIBSHIM
 export DEV_MODE
+export DOCKER
 export _NCORES
 
 help () {
@@ -35,6 +39,7 @@ OPTIONS:
   --x86_64            build on an x86_64 host
   --enable-libshim    enable libshim in musl
   --dev               experimental mode (allows to use more recent versions of musl)
+  --docker            generate a busybox based docker image
   --help              this help message
 EOF
 exit 0
@@ -49,6 +54,7 @@ main () {
 		--x86_64) MODE="x86_64" ;;
 		--enable-libshim) LIBSHIM="--enable-libshim" ;;
 		--dev) DEV_MODE="on" ;;
+		--docker) DOCKER="on";;
 		--help|-h) help ;;
 	esac
 	done
@@ -100,6 +106,11 @@ main () {
 
 	# Build PCuABI busybox
 	${CURR_DIR}/scripts/build-busybox.sh
+
+	if [ "$DOCKER" = "on" ]; then
+		# Build PCuABI busybox based docker image
+		${CURR_DIR}/scripts/build-busybox-docker.sh
+	fi
 }
 
 time main $@
