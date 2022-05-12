@@ -14,8 +14,13 @@ MUSL_BIN=$(realpath $(pwd)/musl-bin)
 COMPILER_RT_BIN=$(realpath $(pwd)/compiler_rt-bin)
 MORELLO_ROOTFS=$(realpath $(pwd)/morello-rootfs)
 MORELLO_DOCKER=$(realpath $(pwd)/morello-docker)
-NCORES=$(grep -c ^processor /proc/cpuinfo)
-_NCORES=$(($NCORES / 2))
+
+if [ -f "/proc/cpuinfo" ]; then
+	NCORES=$(grep -c ^processor /proc/cpuinfo)
+	_NCORES=$(($NCORES / 2))
+else
+	_NCORES=1
+fi
 
 export MORELLO_PROJECTS
 export PRJ_BIN
