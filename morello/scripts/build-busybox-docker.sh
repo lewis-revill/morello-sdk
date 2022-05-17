@@ -4,6 +4,7 @@
 
 MORELLO_BUILDROOT_FILES=${MORELLO_PROJECTS}/buildroot
 MORELLO_MUSL_UTILS_FILES=${MORELLO_PROJECTS}/musl-utils
+MORELLO_INIT_PROCESS=${MORELLO_PROJECTS}/init
 MORELLO_EXAMPLES=${EXAMPLES_BIN}
 MORELLO_ROOTFS_BIN=${MORELLO_ROOTFS}
 MORELLO_ROOTFS_EXAMPLES=$MORELLO_ROOTFS_BIN/morello
@@ -137,6 +138,14 @@ cd $MORELLO_MUSL_UTILS_FILES
 make
 cd $MORELLO_PROJECTS
 
+# Build init process
+if [ "$MODE" = "aarch64" -a $(uname -m) = "aarch64" ]; then
+	cd $MORELLO_INIT_PROCESS
+	make
+	cp bin/init $MORELLO_ROOTFS_BIN/sbin/init.aarch64
+	cd $MORELLO_PROJECTS
+fi
+
 # Copy morello examples
 mkdir -p $MORELLO_ROOTFS_EXAMPLES
 cp -Rf $MORELLO_EXAMPLES/* $MORELLO_ROOTFS_EXAMPLES
@@ -146,7 +155,7 @@ mkdir -p $MORELLO_DOCKER
 cat > $MORELLO_DOCKER/Dockerfile << EOF
 FROM scratch
 ADD morello-busybox-docker.tar.xz /
-CMD ["sh"]
+CMD ["/sbin/init.aarch64"]
 EOF
 
 # Create Docker Image
