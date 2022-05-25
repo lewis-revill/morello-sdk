@@ -36,12 +36,14 @@ void fs_mount(const char *src, const char *dst,
 }
 
 int main(int argc, char *argv[]) {
+#ifndef MORELLO_DOCKER
 	fs_mount("none", "/proc", "proc", 0, "");
 	fs_mount("none", "/dev/pts", "devpts", 0, "");
 	fs_mount("none", "/dev/mqueue", "mqueue", 0, "");
 	fs_mount("none", "/dev/shm", "tmpfs", 0, "");
 	fs_mount("none", "/sys", "sysfs", 0, "");
 	fs_mount("none", "/sys/fs/cgroup", "cgroup", 0, "");
+#endif
 
 	sethostname("morello", sizeof("morello"));
 
