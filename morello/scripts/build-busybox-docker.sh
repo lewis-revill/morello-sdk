@@ -162,3 +162,22 @@ EOF
 # Create Docker Image
 cd $MORELLO_ROOTFS_BIN
 tar -cJvf $MORELLO_DOCKER/morello-busybox-docker.tar.xz .
+
+# Create Morello PCuABI env
+mkdir -p $MORELLO_PCUABI_ENV
+cd $MORELLO_PCUABI_ENV
+dd if=/dev/zero of=morello-pcuabi-env.img bs=1024K count=100
+__loop_device=$(losetup -f --show morello-pcuabi-env.img)
+mkfs.ext4 $__loop_device
+
+mkdir mnt_point
+mount $__loop_device ./mnt_point
+
+cd mnt_point
+tar -xJvf $MORELLO_DOCKER/morello-busybox-docker.tar.xz
+sync
+cd ..
+
+umount ./mnt_point
+losetup --detach $__loop_device
+rm -r ./mnt_point

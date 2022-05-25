@@ -14,6 +14,7 @@ MUSL_BIN=$(realpath $(pwd)/musl-bin)
 COMPILER_RT_BIN=$(realpath $(pwd)/compiler_rt-bin)
 MORELLO_ROOTFS=$(realpath $(pwd)/morello-rootfs)
 MORELLO_DOCKER=$(realpath $(pwd)/morello-docker)
+MORELLO_PCUABI_ENV=$(realpath $(pwd)/morello-pcuabi-env)
 
 if [ -f "/proc/cpuinfo" ]; then
 	NCORES=$(grep -c ^processor /proc/cpuinfo)
@@ -29,6 +30,7 @@ export MUSL_BIN
 export COMPILER_RT_BIN
 export MORELLO_ROOTFS
 export MORELLO_DOCKER
+export MORELLO_PCUABI_ENV
 export MODE
 export LIBSHIM
 export DEV_MODE
