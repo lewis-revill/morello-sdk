@@ -8,7 +8,7 @@ CURR_DIR=$(pwd)
 
 MODE="${MODE:-aarch64}"
 BRANCH=
-MUSL_DEV_COMMIT=165e4eb5f0b8b6a3707771278860f7e518345fd6
+MUSL_DEV_COMMIT=4111f17d06937db9721e86edde0e77de1bd9c3fa
 
 reset_musl_dev () {
 	if [ ! -z ${MUSL_DEV_COMMIT} ]; then
