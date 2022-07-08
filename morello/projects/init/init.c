@@ -106,6 +106,7 @@ int main(int argc, char *argv[]) {
 	printf("Welcome to Morello PCuABI environment (busybox)!\n");
 	printf("Have a lot of fun!\n\n");
 
+#ifndef MORELLO_DOCKER
 	/* Start Processes */
 	while(process[index] != NULL)
 	{
@@ -114,6 +115,7 @@ int main(int argc, char *argv[]) {
 
 		index++;
 	}
+#endif
 
 	/* Start Shell */
 	while(1)
