@@ -92,46 +92,37 @@ CC=clang
 ELF_PATCH=morello_elf
 CMP=cmp -l
 GAWK=gawk
-MUSL_LIB=../../musl-bin/lib
+MUSL_HOME=../../musl-bin
 CLANG_RESOURCE_DIR=\$(shell clang -print-resource-dir)
 
 OUT=../../morello-rootfs/bin
 # we want the same result no matter where we're cross compiling (x86_64, aarch64)
-TARGET?=aarch64-linux-gnu
+TARGET?=aarch64-linux-musl_purecap
 
 all:
 	mkdir -p \$(OUT)
-	\$(CC) -c -g -nostdinc -isystem ../../musl-bin/include \
-		-march=morello+c64 -mabi=purecap getconf.c -o \$(OUT)/getconf.c.o \
-		--target=\$(TARGET)
-	\$(CC) -c -g -nostdinc -isystem ../../musl-bin/include \
-		-march=morello+c64 -mabi=purecap getent.c -o \$(OUT)/getent.c.o \
-		--target=\$(TARGET)
-	\$(CC) --target=\$(TARGET) -fuse-ld=lld -march=morello+c64 -mabi=purecap \
-		\$(MUSL_LIB)/crt1.o \
-		\$(MUSL_LIB)/crti.o \
-		\$(CLANG_RESOURCE_DIR)/lib/linux/clang_rt.crtbegin-morello.o \
-		\$(OUT)/getconf.c.o \
-		\$(CLANG_RESOURCE_DIR)/lib/linux/libclang_rt.builtins-morello.a \
-		\$(CLANG_RESOURCE_DIR)/lib/linux/clang_rt.crtend-morello.o \
-		\$(MUSL_LIB)/crtn.o \
-		-nostdlib -L\$(MUSL_LIB) -lc -o \$(OUT)/getconf -static
-	\$(CC) --target=\$(TARGET) -fuse-ld=lld -march=morello+c64 -mabi=purecap \
-		\$(MUSL_LIB)/crt1.o \
-		\$(MUSL_LIB)/crti.o \
-		\$(CLANG_RESOURCE_DIR)/lib/linux/clang_rt.crtbegin-morello.o \
-		\$(OUT)/getent.c.o \
-		\$(CLANG_RESOURCE_DIR)/lib/linux/libclang_rt.builtins-morello.a \
-		\$(CLANG_RESOURCE_DIR)/lib/linux/clang_rt.crtend-morello.o \
-		\$(MUSL_LIB)/crtn.o \
-		-nostdlib -L\$(MUSL_LIB) -lc -o \$(OUT)/getent -static
+	\$(CC) -c -g -march=morello+c64 \
+		--target=\$(TARGET) --sysroot \$(MUSL_HOME) \
+		getconf.c -o \$(OUT)/getconf.c.o
+	\$(CC) -c -g -march=morello+c64 \
+		--target=\$(TARGET) --sysroot \$(MUSL_HOME) \
+		getent.c -o \$(OUT)/getent.c.o
+	\$(CC) -fuse-ld=lld -march=morello+c64 \
+		--target=\$(TARGET) --sysroot \$(MUSL_HOME) \
+		-rtlib=compiler-rt \
+		\$(OUT)/getconf.c.o -o \$(OUT)/getconf -static
+	\$(CC) -fuse-ld=lld -march=morello+c64 \
+		--target=\$(TARGET) --sysroot \$(MUSL_HOME) \
+		-rtlib=compiler-rt \
+		\$(OUT)/getent.c.o -o \$(OUT)/getent -static
 	\$(ELF_PATCH) \$(OUT)/getconf
 	\$(ELF_PATCH) \$(OUT)/getent
 	rm \$(OUT)/getconf.c.o
 	rm \$(OUT)/getent.c.o
 
 clean:
-	rm \$(OUT)/morello-helloworld
+	rm \$(OUT)/getconf
+	rm \$(OUT)/getent
 EOF
 
 # Build musl utils

@@ -102,28 +102,28 @@ main () {
 	make
 
 	# Build morello-heap-app
-#	cd ${CURR_DIR}/examples/morello-heap-app
-#	make
+	cd ${CURR_DIR}/examples/morello-heap-app
+	make
 
 	# Build morello-stack-app
-#	cd ${CURR_DIR}/examples/morello-stack-app
-#	make
+	cd ${CURR_DIR}/examples/morello-stack-app
+	make
 
 	# Build morello-pthread-app
-#	cd ${CURR_DIR}/examples/morello-pthread-app
-#	make
+	cd ${CURR_DIR}/examples/morello-pthread-app
+	make
 
 	# Build morello-auxv-app
-#	cd ${CURR_DIR}/examples/morello-auxv-app
-#	make
+	cd ${CURR_DIR}/examples/morello-auxv-app
+	make
 
 	# Build PCuABI busybox
-#	${CURR_DIR}/scripts/build-busybox.sh
+	${CURR_DIR}/scripts/build-busybox.sh
 
-#	if [ "$DOCKER" = "on" ]; then
-#		# Build PCuABI busybox based docker image
-#		${CURR_DIR}/scripts/build-busybox-docker.sh
-#	fi
+	if [ "$DOCKER" = "on" ]; then
+		# Build PCuABI busybox based docker image
+		${CURR_DIR}/scripts/build-busybox-docker.sh
+	fi
 }
 
 time main $@
