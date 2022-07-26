@@ -26,24 +26,57 @@ checkout_musl_tag () {
 }
 
 if [ "$MODE" = "aarch64" ]; then
-    BRANCH="morello/linux-aarch64-release-$MORELLO_COMPILER_VERSION"
+	BRANCH="morello/linux-aarch64-release-$MORELLO_COMPILER_VERSION"
 elif [ "$MODE" = "x86_64" ]; then
-    BRANCH="morello/baremetal-release-$MORELLO_COMPILER_VERSION"
+	BRANCH_S="morello/linux-aarch64-release-$MORELLO_COMPILER_VERSION"
+	BRANCH="morello/baremetal-release-$MORELLO_COMPILER_VERSION"
 fi
 
+PROJECTS_LIST=( llvm musl )
+PROJECTS_SOURCE=( llvm-project )
+
 if [ ! -f "${CURR_DIR}/.llvm-env" ]; then
-	# Populate repositories
-	git submodule update --init --recursive --progress
-	git submodule update --remote --merge
+	for i in "${PROJECTS_LIST[@]}"
+	do
+		echo "$i updating progress..."
+		# Populate repositories
+		git submodule update --init --recursive --progress $i
+		git submodule update --remote --merge $i
+	done
+
+	if [ "$BUILD_LIB" = "on" ]; then
+		for i in "${PROJECTS_SOURCE[@]}"
+		do
+			echo "$i updating progress..."
+			# Populate repositories
+			git submodule update --init --recursive --progress $i
+			git submodule update --remote --merge $i
+		done
+	fi
 
 	touch ${CURR_DIR}/.llvm-env
 fi
 
 # Config Clang
-(cd ${CURR_DIR}/llvm; git checkout $BRANCH)
+if [ "$MODE" = "aarch64" ]; then
+	cd ${CURR_DIR}/llvm
+	git checkout $BRANCH
+elif [ "$MODE" = "x86_64" ]; then
+	cd ${CURR_DIR}/llvm
+	git clean -fd
+	git checkout $BRANCH_S
+	mkdir -p ${CURR_DIR}/.tmp/aarch64-unknown-linux-musl_purecap
+	cp -Rfv ${CURR_DIR}/llvm/lib/clang/13.0.0/lib/aarch64-unknown-linux-musl_purecap/* ${CURR_DIR}/.tmp/aarch64-unknown-linux-musl_purecap
+	git checkout $BRANCH
+	mv ${CURR_DIR}/.tmp/aarch64-unknown-linux-musl_purecap ${CURR_DIR}/llvm/lib/clang/13.0.0/lib/
+	rm ${CURR_DIR}/.tmp -fr
+fi
 
-# Config Clang sources to build compiler-rt for Morello
-(cd ${CURR_DIR}/llvm-project; git checkout morello/release-$MORELLO_COMPILER_SOURCE_VERSION)
+if [ "$BUILD_LIB" = "on" ]; then
+	# Config Clang sources to build compiler-rt for Morello
+	cd ${CURR_DIR}/llvm-project
+	git checkout morello/release-$MORELLO_COMPILER_SOURCE_VERSION
+fi
 
 # Config Musl
 if [ "$DEV_MODE" == "off" ]; then

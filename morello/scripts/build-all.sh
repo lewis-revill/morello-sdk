@@ -6,6 +6,7 @@ MODE="aarch64"
 LIBSHIM="--disable-libshim"
 DEV_MODE="off"
 DOCKER="off"
+BUILD_LIB="off"
 CURR_DIR=$(pwd)
 MORELLO_PROJECTS=$(realpath $(pwd)/projects)
 PRJ_BIN=$(realpath $(pwd)/bin)
@@ -35,6 +36,7 @@ export MODE
 export LIBSHIM
 export DEV_MODE
 export DOCKER
+export BUILD_LIB
 export _NCORES
 
 help () {
@@ -47,6 +49,7 @@ OPTIONS:
   --enable-libshim    enable libshim in musl
   --dev               experimental mode (allows to use more recent versions of musl)
   --docker            generate a busybox based docker image
+  --build-lib         build libraries from source (e.g. compiler_rt, crtobjects...)
   --help              this help message
 EOF
 exit 0
@@ -62,6 +65,7 @@ main () {
 		--enable-libshim) LIBSHIM="--enable-libshim" ;;
 		--dev) DEV_MODE="on" ;;
 		--docker) DOCKER="on";;
+		--build-lib) BUILD_LIB="on";;
 		--help|-h) help ;;
 	esac
 	done
@@ -85,8 +89,10 @@ main () {
 	# Build Musl
 	${CURR_DIR}/scripts/build-musl.sh
 
-	# Build Libraries
-	${CURR_DIR}/scripts/build-libraries.sh
+	if [ "$BUILD_LIB" = "on" ]; then
+		# Build Libraries
+		${CURR_DIR}/scripts/build-libraries.sh
+	fi
 
 	# Create examples/bin
 	mkdir -p ${EXAMPLES_BIN}
@@ -96,28 +102,28 @@ main () {
 	make
 
 	# Build morello-heap-app
-	cd ${CURR_DIR}/examples/morello-heap-app
-	make
+#	cd ${CURR_DIR}/examples/morello-heap-app
+#	make
 
 	# Build morello-stack-app
-	cd ${CURR_DIR}/examples/morello-stack-app
-	make
+#	cd ${CURR_DIR}/examples/morello-stack-app
+#	make
 
 	# Build morello-pthread-app
-	cd ${CURR_DIR}/examples/morello-pthread-app
-	make
+#	cd ${CURR_DIR}/examples/morello-pthread-app
+#	make
 
 	# Build morello-auxv-app
-	cd ${CURR_DIR}/examples/morello-auxv-app
-	make
+#	cd ${CURR_DIR}/examples/morello-auxv-app
+#	make
 
 	# Build PCuABI busybox
-	${CURR_DIR}/scripts/build-busybox.sh
+#	${CURR_DIR}/scripts/build-busybox.sh
 
-	if [ "$DOCKER" = "on" ]; then
-		# Build PCuABI busybox based docker image
-		${CURR_DIR}/scripts/build-busybox-docker.sh
-	fi
+#	if [ "$DOCKER" = "on" ]; then
+#		# Build PCuABI busybox based docker image
+#		${CURR_DIR}/scripts/build-busybox-docker.sh
+#	fi
 }
 
 time main $@

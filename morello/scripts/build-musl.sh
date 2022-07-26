@@ -12,7 +12,7 @@ CC=clang ./configure \
 	--disable-shared \
 	--enable-morello \
 	${LIBSHIM} \
-	--target=aarch64-linux-gnu \
+	--target=aarch64-linux-musl_purecap \
 	--prefix=${MUSL_BIN}
 
 if [ "$?" != 0 ]; then

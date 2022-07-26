@@ -4,27 +4,23 @@ CC=clang
 ELF_PATCH=morello_elf
 CMP=cmp -l
 GAWK=gawk
-MUSL_LIB=../../musl-bin/lib
+MUSL_HOME=../../musl-bin
 CLANG_RESOURCE_DIR=$(shell clang -print-resource-dir)
 
 OUT=../bin
 # we want the same result no matter where we're cross compiling (x86_64, aarch64)
-TARGET?=aarch64-linux-gnu
+TARGET?=aarch64-linux-musl_purecap
 
 all:
 	mkdir -p $(OUT)
-	$(CC) -c -g -nostdinc -isystem ../../musl-bin/include \
-		-march=morello+c64 -mabi=purecap main.c -o $(OUT)/morello-helloworld.c.o \
-		--target=$(TARGET)
-	$(CC) --target=$(TARGET) -fuse-ld=lld -march=morello+c64 -mabi=purecap \
-		$(MUSL_LIB)/crt1.o \
-		$(MUSL_LIB)/crti.o \
-		$(CLANG_RESOURCE_DIR)/lib/linux/clang_rt.crtbegin-morello.o \
+	$(CC) -c -g -march=morello+c64 \
+		--target=$(TARGET) --sysroot $(MUSL_HOME) \
+		main.c -o $(OUT)/morello-helloworld.c.o
+	$(CC) -fuse-ld=lld -march=morello+c64 \
+		--target=$(TARGET) --sysroot $(MUSL_HOME) \
+		-rtlib=compiler-rt \
 		$(OUT)/morello-helloworld.c.o \
-		$(CLANG_RESOURCE_DIR)/lib/linux/libclang_rt.builtins-morello.a \
-		$(CLANG_RESOURCE_DIR)/lib/linux/clang_rt.crtend-morello.o \
-		$(MUSL_LIB)/crtn.o \
-		-nostdlib -L$(MUSL_LIB) -lc -o $(OUT)/morello-helloworld -static
+		-o $(OUT)/morello-helloworld -static
 	$(ELF_PATCH) $(OUT)/morello-helloworld
 	rm $(OUT)/morello-helloworld.c.o
 
