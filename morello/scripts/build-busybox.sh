@@ -7,8 +7,6 @@ MORELLO_ROOTFS_SRC=${MORELLO_PROJECTS}/morello-busybox
 
 _NCORES=$(nproc --all)
 
-mkdir -p ${MORELLO_ROOTFS}
-
 # Build morello-busybox
 cp ${MORELLO_ROOTFS_CFG} ${MORELLO_ROOTFS_SRC}/.config
 

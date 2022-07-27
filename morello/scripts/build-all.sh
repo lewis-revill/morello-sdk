@@ -9,11 +9,14 @@ DOCKER="off"
 BUILD_LIB="off"
 CURR_DIR=$(pwd)
 MORELLO_PROJECTS=$(realpath $(pwd)/projects)
+LINUX_HOME=$(realpath $(pwd)/projects/linux)
+KBUILD_OUTPUT=$(realpath $(pwd)/linux-out)
 PRJ_BIN=$(realpath $(pwd)/bin)
 EXAMPLES_BIN=$(realpath $(pwd)/examples/bin)
 MUSL_BIN=$(realpath $(pwd)/musl-bin)
 COMPILER_RT_BIN=$(realpath $(pwd)/compiler_rt-bin)
 MORELLO_ROOTFS=$(realpath $(pwd)/morello-rootfs)
+MORELLO_TESTING=$(realpath $(pwd)/morello-rootfs/testing)
 MORELLO_DOCKER=$(realpath $(pwd)/morello-docker)
 
 if [ -f "/proc/cpuinfo" ]; then
@@ -24,11 +27,14 @@ else
 fi
 
 export MORELLO_PROJECTS
+export LINUX_HOME
+export KBUILD_OUTPUT
 export PRJ_BIN
 export EXAMPLES_BIN
 export MUSL_BIN
 export COMPILER_RT_BIN
 export MORELLO_ROOTFS
+export MORELLO_TESTING
 export MORELLO_DOCKER
 export MODE
 export LIBSHIM
@@ -76,6 +82,12 @@ main () {
 	# Cleanup old files
 	rm -fr ${MORELLO_ROOFS} ${MUSL_BIN} ${COMPILER_RT_BIN} ${PRJ_BIN} ${EXAMPLES_BIN}
 
+	echo "RootFS: ${MORELLO_ROOTFS}"
+	echo "Testing: ${MORELLO_TESTING}"
+
+	# Create required directories
+	mkdir -p ${MORELLO_ROOTFS} && mkdir -p ${MORELLO_TESTING}
+
 	# Configure LLVM and musl for Morello
 	${CURR_DIR}/scripts/configure-llvm-musl.sh
 
@@ -83,6 +95,9 @@ main () {
 	cd ${CURR_DIR}/tools
 	make
 	cd ${CURR_DIR}
+
+	# Build Linux
+	${CURR_DIR}/scripts/build-linux.sh
 
 	# Build Musl
 	${CURR_DIR}/scripts/build-musl.sh
