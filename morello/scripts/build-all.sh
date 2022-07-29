@@ -88,6 +88,9 @@ main () {
 	# Create required directories
 	mkdir -p ${MORELLO_ROOTFS} && mkdir -p ${MORELLO_TESTING}
 
+	# Configure Firmware for Morello
+	${CURR_DIR}/scripts/configure-firmware.sh
+
 	# Configure LLVM and musl for Morello
 	${CURR_DIR}/scripts/configure-llvm-musl.sh
 

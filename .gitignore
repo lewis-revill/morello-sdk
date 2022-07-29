@@ -4,6 +4,7 @@
 /morello/examples/bin/
 /morello/morello-rootfs/
 /morello/.llvm-env
+/morello/.firmware-env
 /morello/morello-docker/
 /morello/linux-out/
 /morello/projects/buildroot/
