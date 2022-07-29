@@ -3,8 +3,10 @@
 /morello/compiler_rt-bin/
 /morello/examples/bin/
 /morello/morello-rootfs/
+/morello/gcc/
 /morello/.llvm-env
 /morello/.firmware-env
+/morello/.gcc-toolchain
 /morello/morello-docker/
 /morello/linux-out/
 /morello/projects/buildroot/

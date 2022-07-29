@@ -1,2 +1,4 @@
 export MORELLO_OLD_PATH=$PATH
-export PATH=$(pwd)/bin:$(pwd)/llvm/bin:$PATH
+export GCC_AARCH64_PATH=$(pwd)/gcc/gcc-arm-11.2-2022.02-aarch64-aarch64-none-elf/bin:$(pwd)/gcc/gcc-arm-11.2-2022.02-aarch64-arm-none-eabi/bin
+export GCC_X86_64_PATH=$(pwd)/gcc/gcc-arm-11.2-2022.02-x86_64-aarch64-none-elf/bin:$(pwd)/gcc/gcc-arm-11.2-2022.02-x86_64-arm-none-eabi/bin
+export PATH=$(pwd)/bin:$(pwd)/llvm/bin:$GCC_AARCH64_PATH:$GCC_X86_64_PATH:$PATH

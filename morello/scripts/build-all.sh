@@ -14,6 +14,7 @@ KBUILD_OUTPUT=$(realpath $(pwd)/linux-out)
 PRJ_BIN=$(realpath $(pwd)/bin)
 EXAMPLES_BIN=$(realpath $(pwd)/examples/bin)
 MUSL_BIN=$(realpath $(pwd)/musl-bin)
+GCC_HOME=$(realpath $(pwd)/gcc)
 COMPILER_RT_BIN=$(realpath $(pwd)/compiler_rt-bin)
 MORELLO_ROOTFS=$(realpath $(pwd)/morello-rootfs)
 MORELLO_TESTING=$(realpath $(pwd)/morello-rootfs/testing)
@@ -32,6 +33,7 @@ export KBUILD_OUTPUT
 export PRJ_BIN
 export EXAMPLES_BIN
 export MUSL_BIN
+export GCC_HOME
 export COMPILER_RT_BIN
 export MORELLO_ROOTFS
 export MORELLO_TESTING
@@ -86,7 +88,10 @@ main () {
 	echo "Testing: ${MORELLO_TESTING}"
 
 	# Create required directories
-	mkdir -p ${MORELLO_ROOTFS} && mkdir -p ${MORELLO_TESTING}
+	mkdir -p ${MORELLO_ROOTFS} && mkdir -p ${MORELLO_TESTING} && mkdir -p ${GCC_HOME}
+
+	# Configure GCC Toolchain
+	${CURR_DIR}/scripts/configure-gcc-toolchain.sh
 
 	# Configure Firmware for Morello
 	${CURR_DIR}/scripts/configure-firmware.sh
@@ -106,7 +111,7 @@ main () {
 	${CURR_DIR}/scripts/build-musl.sh
 
 	if [ "$BUILD_LIB" = "on" ]; then
-		# Build Libraries
+	# Build Libraries
 		${CURR_DIR}/scripts/build-libraries.sh
 	fi
 
@@ -137,7 +142,7 @@ main () {
 	${CURR_DIR}/scripts/build-busybox.sh
 
 	if [ "$DOCKER" = "on" ]; then
-		# Build PCuABI busybox based docker image
+	# Build PCuABI busybox based docker image
 		${CURR_DIR}/scripts/build-busybox-docker.sh
 	fi
 }
