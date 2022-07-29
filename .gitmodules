@@ -7,3 +7,18 @@
 [submodule "morello/musl"]
 	path = morello/musl
 	url = https://git.morello-project.org/morello/musl-libc.git
+[submodule "morello/projects/bsp/arm-tf"]
+	path = morello/projects/bsp/arm-tf
+	url = https://git.morello-project.org/morello/trusted-firmware-a
+[submodule "morello/projects/bsp/mbedtls"]
+	path = morello/projects/bsp/mbedtls
+	url = https://github.com/ARMmbed/mbedtls
+[submodule "morello/projects/bsp/scp"]
+	path = morello/projects/bsp/scp
+	url = https://git.morello-project.org/morello/scp-firmware
+[submodule "morello/projects/bsp/uefi"]
+	path = morello/projects/bsp/uefi
+	url = https://git.morello-project.org/morello/edk2
+[submodule "morello/projects/bsp/grub"]
+	path = morello/projects/bsp/grub
+	url = https://git.savannah.gnu.org/git/grub
