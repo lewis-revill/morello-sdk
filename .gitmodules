@@ -22,3 +22,6 @@
 [submodule "morello/projects/bsp/grub"]
 	path = morello/projects/bsp/grub
 	url = https://git.savannah.gnu.org/git/grub
+[submodule "morello/projects/linux"]
+	path = morello/projects/linux
+	url = https://git.morello-project.org/morello/kernel/linux.git
