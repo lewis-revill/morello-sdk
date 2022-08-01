@@ -17,7 +17,7 @@ MUSL_BIN=$(realpath $(pwd)/musl-bin)
 GCC_HOME=$(realpath $(pwd)/gcc)
 COMPILER_RT_BIN=$(realpath $(pwd)/compiler_rt-bin)
 MORELLO_ROOTFS=$(realpath $(pwd)/morello-rootfs)
-MORELLO_TESTING=$(realpath $(pwd)/morello-rootfs/testing)
+MORELLO_TESTING="$MORELLO_ROOTFS/testing"
 MORELLO_DOCKER=$(realpath $(pwd)/morello-docker)
 
 if [ -f "/proc/cpuinfo" ]; then
