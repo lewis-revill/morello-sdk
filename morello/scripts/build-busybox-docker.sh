@@ -65,6 +65,61 @@ do
 	fi;
 done
 
+# Create proc an sys
+mkdir -p ./proc
+chmod 755 ./proc
+mkdir -p ./sys
+chmod 755 ./sys
+
+# Create /init
+cat > ./init << EOF
+#!/bin/busybox sh
+
+# SPDX-License-Identifier: BSD-3-Clause
+
+mount() {
+	/bin/busybox mount "\$@"
+}
+
+grep() {
+	/bin/busybox grep "\$@"
+}
+
+mount -t proc proc /proc
+grep -qE \$'\\t'"devtmpfs\$" /proc/filesystems && mount -t devtmpfs dev /dev
+mount -t sysfs sysfs /sys
+
+! grep -qE $'\\t'"devtmpfs\$" /proc/filesystems && mdev -s
+
+for script in /etc/init.d/*.sh ;
+do
+	test -e "\$script" && . "\$script"
+done
+
+printf "Welcome to Morello PCuABI environment (busybox)!\n"
+printf "Have a lot of fun!\n\n"
+
+exec /sbin/init.aarch64
+exec setsid cttyhack sh
+printf "setsid failed fallback to /bin/sh\n"
+exec /bin/sh
+EOF
+
+chmod 755 ./init
+
+# Create example startup script
+mkdir -p ./etc/init.d
+
+cat > ./etc/init.d/0-startup.sh << EOF
+#!/bin/busybox sh
+
+# SPDX-License-Identifier: BSD-3-Clause
+
+printf "Startup...\n"
+EOF
+
+chmod 755 ./etc/init.d/0-startup.sh
+
 # Set permissions
 awk ' \
 	!/^#/ { \
