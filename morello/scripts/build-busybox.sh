@@ -11,5 +11,10 @@ _NCORES=$(nproc --all)
 cp ${MORELLO_ROOTFS_CFG} ${MORELLO_ROOTFS_SRC}/.config
 
 cd ${MORELLO_ROOTFS_SRC}
-make clean && make -j$_NCORES && make CONFIG_PREFIX=${MORELLO_ROOTFS} install
+
+# Locally unset KBUILD_OUTPUT as this one is not being used by busybox build
+# and otherwise it messes things up
+ALTER_ENV="env -u KBUILD_OUTPUT"
+
+make clean && $ALTER_ENV make -j$_NCORES && $ALTER_ENV make CONFIG_PREFIX=${MORELLO_ROOTFS} install
 
