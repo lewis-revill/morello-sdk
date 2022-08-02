@@ -109,6 +109,9 @@ main () {
 	# Build SCP
 	${CURR_DIR}/scripts/build-scp.sh
 
+	# Build ARM-TF
+	${CURR_DIR}/scripts/build-arm-tf.sh
+
 	# Build Linux
 	${CURR_DIR}/scripts/build-linux.sh
 
