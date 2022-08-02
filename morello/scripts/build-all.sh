@@ -9,6 +9,7 @@ DOCKER="off"
 BUILD_LIB="off"
 CURR_DIR=$(pwd)
 MORELLO_PROJECTS=$(realpath $(pwd)/projects)
+BSP_HOME=$(realpath $(pwd)/bsp)
 LINUX_HOME=$(realpath $(pwd)/projects/linux)
 KBUILD_OUTPUT=$(realpath $(pwd)/linux-out)
 PRJ_BIN=$(realpath $(pwd)/bin)
@@ -28,6 +29,7 @@ else
 fi
 
 export MORELLO_PROJECTS
+export BSP_HOME
 export LINUX_HOME
 export KBUILD_OUTPUT
 export PRJ_BIN
@@ -82,7 +84,7 @@ main () {
 	fi
 
 	# Cleanup old files
-	rm -fr ${MORELLO_ROOTFS} ${MUSL_BIN} ${COMPILER_RT_BIN} ${PRJ_BIN} ${EXAMPLES_BIN}
+	rm -fr ${MORELLO_ROOTFS} ${MUSL_BIN} ${COMPILER_RT_BIN} ${PRJ_BIN} ${EXAMPLES_BIN} ${BSP_HOME}
 
 	echo "RootFS: ${MORELLO_ROOTFS}"
 	echo "Testing: ${MORELLO_TESTING}"
@@ -103,6 +105,9 @@ main () {
 	cd ${CURR_DIR}/tools
 	make
 	cd ${CURR_DIR}
+
+	# Build SCP
+	${CURR_DIR}/scripts/build-scp.sh
 
 	# Build Linux
 	${CURR_DIR}/scripts/build-linux.sh

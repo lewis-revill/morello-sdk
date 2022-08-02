@@ -9,6 +9,7 @@
 /morello/.gcc-toolchain
 /morello/morello-docker/
 /morello/linux-out/
+/morello/bsp/
 /morello/projects/buildroot/
 /morello/projects/morello-busybox/
 /morello/projects/morello-linux-headers/

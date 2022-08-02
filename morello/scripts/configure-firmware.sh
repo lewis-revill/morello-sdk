@@ -38,6 +38,15 @@ submodule_update_projects() {
 	cd ${CURR_DIR}
 }
 
+generate_bsp_home() {
+	local PLATFORMS=( fvp soc out )
+
+	for i in "${PLATFORMS[@]}"
+	do
+		mkdir -p $BSP_HOME/$i
+	done
+}
+
 PROJECTS_LIST=( linux )
 PROJECTS_BSP_LIST=( arm-tf scp uefi )
 PROJECTS_BSP_OPEN=( grub mbedtls )
@@ -64,3 +73,4 @@ if [ ! -f "${CURR_DIR}/.firmware-env" ]; then
 	touch ${CURR_DIR}/.firmware-env
 fi
 
+generate_bsp_home
