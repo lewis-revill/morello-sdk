@@ -25,3 +25,12 @@
 [submodule "morello/projects/linux"]
 	path = morello/projects/linux
 	url = https://git.morello-project.org/morello/kernel/linux.git
+[submodule "morello/projects/bsp/edk2-platforms"]
+	path = morello/projects/bsp/edk2-platforms
+	url = https://git.morello-project.org/morello/edk2-platforms.git
+[submodule "morello/projects/bsp/acpica"]
+	path = morello/projects/bsp/acpica
+	url = https://github.com/acpica/acpica.git
+[submodule "morello/projects/bsp/edk2-non-osi"]
+	path = morello/projects/bsp/edk2-non-osi
+	url = https://github.com/tianocore/edk2-non-osi.git

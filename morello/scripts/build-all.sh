@@ -112,6 +112,9 @@ main () {
 	# Build ARM-TF
 	${CURR_DIR}/scripts/build-arm-tf.sh
 
+	# Build UEFI
+	${CURR_DIR}/scripts/build-uefi.sh
+
 	# Build Linux
 	${CURR_DIR}/scripts/build-linux.sh
 
