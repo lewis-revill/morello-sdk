@@ -109,11 +109,14 @@ main () {
 	# Build SCP
 	${CURR_DIR}/scripts/build-scp.sh
 
+	# Build UEFI (UEFI must be built before then arm-tf)
+	${CURR_DIR}/scripts/build-uefi.sh
+
 	# Build ARM-TF
 	${CURR_DIR}/scripts/build-arm-tf.sh
 
-	# Build UEFI
-	${CURR_DIR}/scripts/build-uefi.sh
+	# Generate Firmware
+	${CURR_DIR}/scripts/generate-firmware.sh
 
 	# Build Linux
 	${CURR_DIR}/scripts/build-linux.sh

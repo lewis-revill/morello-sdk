@@ -12,6 +12,7 @@ copy_arm_tf_bin() {
 	cp "${OUTPUT_DIR}/bl1.bin" "${BSP_HOME}/$1/arm-tf/tf-bl1.bin"
 	cp "${OUTPUT_DIR}/bl2.bin" "${BSP_HOME}/$1/arm-tf/tf-bl2.bin"
 	cp "${OUTPUT_DIR}/bl31.bin" "${BSP_HOME}/$1/arm-tf/tf-bl31.bin"
+	cp "${OUTPUT_DIR}/fip.bin" "${BSP_HOME}/$1/arm-tf/fip.bin"
 	cp "${OUTPUT_DIR}/fdts/morello-$1.dtb" "${BSP_HOME}/$1/arm-tf/morello.dtb"
 	cp "${OUTPUT_DIR}/fdts/morello_fw_config.dtb" "${BSP_HOME}/$1/arm-tf/morello_fw_config.dtb"
 	cp "${OUTPUT_DIR}/fdts/morello_tb_fw_config.dtb" "${BSP_HOME}/$1/arm-tf/morello_tb_fw_config.dtb"
@@ -66,10 +67,11 @@ options+=(
 
 for p in "${platforms[@]}"
 do
-	options+=(
-		TARGET_PLATFORM=$p
+	options_plat=(
+		TARGET_PLATFORM="${p}"
+		BL33="${BSP_HOME}/${p}/uefi/BL33_AP_UEFI.fd"
 	)
 
-	make "${options[@]}" all
+	make "${options[@]}" "${options_plat[@]}" all fip
 	copy_arm_tf_bin $p
 done
