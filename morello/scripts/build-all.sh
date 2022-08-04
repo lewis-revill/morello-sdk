@@ -118,6 +118,9 @@ main () {
 	# Generate Firmware
 	${CURR_DIR}/scripts/generate-firmware.sh
 
+	# Build GRUB
+	${CURR_DIR}/scripts/build-grub.sh
+
 	# Build Linux
 	${CURR_DIR}/scripts/build-linux.sh
 
