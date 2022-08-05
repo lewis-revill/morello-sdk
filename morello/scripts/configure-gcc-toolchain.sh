@@ -27,5 +27,5 @@ get_gcc_toolchain() {
 }
 
 if [ ! -f "${CURR_DIR}/.gcc-toolchain" ]; then
-	get_gcc_toolchain $MODE
+	get_gcc_toolchain $OPTIONS_MODE
 fi

@@ -6,7 +6,7 @@ source ./env/morello-aarch64-versions
 
 CURR_DIR=$(pwd)
 
-MODE="${MODE:-aarch64}"
+OPTIONS_MODE="${OPTIONS_MODE:-aarch64}"
 BRANCH=
 MUSL_DEV_COMMIT=4111f17d06937db9721e86edde0e77de1bd9c3fa
 
@@ -25,9 +25,9 @@ checkout_musl_tag () {
 	fi
 }
 
-if [ "$MODE" = "aarch64" ]; then
+if [ "$OPTIONS_MODE" = "aarch64" ]; then
 	BRANCH="morello/linux-aarch64-release-$MORELLO_COMPILER_VERSION"
-elif [ "$MODE" = "x86_64" ]; then
+elif [ "$OPTIONS_MODE" = "x86_64" ]; then
 	BRANCH_S="morello/linux-aarch64-release-$MORELLO_COMPILER_VERSION"
 	BRANCH="morello/baremetal-release-$MORELLO_COMPILER_VERSION"
 fi
@@ -58,10 +58,10 @@ if [ ! -f "${CURR_DIR}/.llvm-env" ]; then
 fi
 
 # Config Clang
-if [ "$MODE" = "aarch64" ]; then
+if [ "$OPTIONS_MODE" = "aarch64" ]; then
 	cd ${CURR_DIR}/llvm
 	git checkout $BRANCH
-elif [ "$MODE" = "x86_64" ]; then
+elif [ "$OPTIONS_MODE" = "x86_64" ]; then
 	cd ${CURR_DIR}/llvm
 	git clean -fd
 	git checkout $BRANCH_S
@@ -79,7 +79,7 @@ if [ "$BUILD_LIB" = "on" ]; then
 fi
 
 # Config Musl
-if [ "$DEV_MODE" == "off" ]; then
+if [ "$OPTIONS_DEV_MODE" == "off" ]; then
 	(cd ${CURR_DIR}/musl; checkout_musl_tag);
 else
 	(cd ${CURR_DIR}/musl; git checkout morello/master; reset_musl_dev);

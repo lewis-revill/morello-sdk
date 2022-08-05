@@ -11,7 +11,7 @@ cd musl
 CC=clang ./configure \
 	--disable-shared \
 	--enable-morello \
-	${LIBSHIM} \
+	${OPTIONS_LIBSHIM} \
 	--target=aarch64-linux-musl_purecap \
 	--prefix=${MUSL_BIN}
 

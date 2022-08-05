@@ -186,7 +186,7 @@ make
 cd $MORELLO_PROJECTS
 
 # Build init process
-if [ "$MODE" = "aarch64" -a $(uname -m) = "aarch64" ]; then
+if [ "$OPTIONS_MODE" = "aarch64" -a $(uname -m) = "aarch64" ]; then
 	cd $MORELLO_INIT_PROCESS
 	make
 	cp bin/init $MORELLO_ROOTFS_BIN/sbin/init.aarch64
