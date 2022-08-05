@@ -15,6 +15,7 @@ COMPILER_RT_BIN="${MORELLO_AARCH64_HOME}/compiler_rt-bin"
 MORELLO_ROOTFS="${MORELLO_AARCH64_HOME}/morello-rootfs"
 MORELLO_TESTING="${MORELLO_ROOTFS}/testing"
 MORELLO_DOCKER="${MORELLO_AARCH64_HOME}/morello-docker"
+MORELLO_HOME="/morello"
 
 if [ -f "/proc/cpuinfo" ]; then
 	NCORES=$(grep -c ^processor /proc/cpuinfo)
@@ -37,6 +38,7 @@ export MORELLO_ROOTFS
 export MORELLO_TESTING
 export MORELLO_DOCKER
 export _NCORES
+export MORELLO_HOME
 
 # Optional configuration paramenters
 OPTIONS_MODE="aarch64"
@@ -48,6 +50,7 @@ OPTIONS_DOCKER="off"
 OPTIONS_BUILD_LIB="off"
 OPTIONS_LIBSHIM="--disable-libshim"
 OPTIONS_DEV_MODE="off"
+OPTIONS_ENV_INSTALL="off"
 
 export OPTIONS_MODE
 export OPTIONS_FIRMWARE
@@ -58,6 +61,7 @@ export OPTIONS_DOCKER
 export OPTIONS_BUILD_LIB
 export OPTIONS_LIBSHIM
 export OPTIONS_DEV_MODE
+export OPTIONS_ENV_INSTALL
 
 help () {
 cat <<EOF
@@ -80,6 +84,8 @@ OPTIONS:
   --docker            generate a busybox based docker image
   --build-lib         build libraries from source (e.g. compiler_rt, crtobjects...)
 
+  --install           [DO NOT USE THIS OPTION OUTSIDE OF A CONTAINER]
+
   --help              this help message
 EOF
 exit 0
@@ -100,6 +106,7 @@ main () {
 		--rootfs) OPTIONS_ROOTFS="on" ;;
 		--docker) OPTIONS_DOCKER="on";;
 		--build-lib) OPTIONS_BUILD_LIB="on";;
+		--install) OPTIONS_INSTALL="on" ;;
 		--help|-h) help ;;
 	esac
 	done
@@ -195,6 +202,11 @@ main () {
 	if [ "$OPTIONS_DOCKER" = "on" ]; then
 		# Build PCuABI busybox based docker image
 		${MORELLO_AARCH64_HOME}/scripts/build-busybox-docker.sh
+	fi
+
+	if [ "$OPTIONS_INSTALL" = "on" ]; then
+		# Install toolchain
+		${MORELLO_AARCH64_HOME}/scripts/morello-install.sh
 	fi
 }
 
