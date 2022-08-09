@@ -99,7 +99,7 @@ done
 printf "Welcome to Morello PCuABI environment (busybox)!\n"
 printf "Have a lot of fun!\n\n"
 
-exec /sbin/init.aarch64
+exec /sbin/init.morello
 exec setsid cttyhack sh
 printf "setsid failed fallback to /bin/sh\n"
 exec /bin/sh
@@ -189,8 +189,10 @@ cd $MORELLO_PROJECTS
 if [ "$OPTIONS_MODE" = "aarch64" -a $(uname -m) = "aarch64" ]; then
 	cd $MORELLO_INIT_PROCESS
 	make
-	cp bin/init $MORELLO_ROOTFS_BIN/sbin/init.aarch64
-	cp bin/init.vm $MORELLO_ROOTFS_BIN/sbin/init.aarch64.vm
+	cp bin/init $MORELLO_ROOTFS_BIN/sbin/init.morello
+	cp bin/init.docker $MORELLO_ROOTFS_BIN/sbin/init.morello.docker
+	cp bin/init.aarch64 $MORELLO_ROOTFS_BIN/sbin/init.aarch64
+	cp bin/init.aarch64.docker $MORELLO_ROOTFS_BIN/sbin/init.aarch64.docker
 
 	cd $MORELLO_HEARTBEAT_PROCESS
 	make
