@@ -77,31 +77,14 @@ cat > ./init << EOF
 
 # SPDX-License-Identifier: BSD-3-Clause
 
-mount() {
-	/bin/busybox mount "\$@"
-}
-
-grep() {
-	/bin/busybox grep "\$@"
-}
-
-mount -t proc proc /proc
-grep -qE \$'\\t'"devtmpfs\$" /proc/filesystems && mount -t devtmpfs dev /dev
-mount -t sysfs sysfs /sys
-
-! grep -qE $'\\t'"devtmpfs\$" /proc/filesystems && mdev -s
+exec /sbin/init.morello
 
 for script in /etc/init.d/*.sh ;
 do
 	test -e "\$script" && . "\$script"
 done
 
-printf "Welcome to Morello PCuABI environment (busybox)!\n"
-printf "Have a lot of fun!\n\n"
-
-exec /sbin/init.morello
 exec setsid cttyhack sh
-printf "setsid failed fallback to /bin/sh\n"
 exec /bin/sh
 EOF
 

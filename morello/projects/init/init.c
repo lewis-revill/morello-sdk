@@ -103,6 +103,9 @@ int main(int argc, char *argv[]) {
 	/* Set hostname */
 	sethostname("morello", sizeof("morello"));
 
+	printf("\nWelcome to Morello PCuABI environment (busybox)!\n");
+	printf("Have a lot of fun!\n\n");
+
 #ifndef MORELLO_DOCKER
 	/* Start Processes */
 	while(process[index] != NULL)
