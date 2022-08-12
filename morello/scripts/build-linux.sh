@@ -24,10 +24,3 @@ make mrproper && make clean && make $MORELLO_CONFIG && make -j$_NCORES -s
 
 # Build kselftest
 make -j1 -C tools/testing/selftests/ TARGETS=arm64 ARM64_SUBTARGETS=morello -s
-
-# Copy kselftest in rootfs
-cp -Rf ${KBUILD_OUTPUT}/kselftest ${MORELLO_TESTING}
-
-# Remove compilation artifacts
-cd ${MORELLO_TESTING}/kselftest/arm64/morello/
-rm *.d *.o
