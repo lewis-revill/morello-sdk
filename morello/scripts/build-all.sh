@@ -44,6 +44,7 @@ export MORELLO_HOME
 OPTIONS_MODE="aarch64"
 OPTIONS_FIRMWARE="off"
 OPTIONS_LINUX="off"
+OPTIONS_KSELFTEST="off"
 OPTIONS_C_APPS="off"
 OPTIONS_ROOTFS="off"
 OPTIONS_DOCKER="off"
@@ -55,6 +56,7 @@ OPTIONS_ENV_INSTALL="off"
 export OPTIONS_MODE
 export OPTIONS_FIRMWARE
 export OPTIONS_LINUX
+export OPTIONS_KSELFTEST
 export OPTIONS_C_APPS
 export OPTIONS_ROOTFS
 export OPTIONS_DOCKER
@@ -79,6 +81,7 @@ OPTIONS:
 [MODULES]:
   --firmware          generate the firmware for Morello
   --linux             builds linux for Morello
+  --kselftest         builds kselftest for Morello
   --c-apps            builds example c applications for Morello
   --rootfs            builds the rootfs for Morello
   --docker            generate a busybox based docker image
@@ -102,6 +105,7 @@ main () {
 		--dev) OPTIONS_DEV_MODE="on" ;;
 		--firmware) OPTIONS_FIRMWARE="on" ;;
 		--linux) OPTIONS_LINUX="on" ;;
+		--kselftest) OPTIONS_KSELFTEST="on" ;;
 		--c-apps) OPTIONS_C_APPS="on" ;;
 		--rootfs) OPTIONS_ROOTFS="on" ;;
 		--docker) OPTIONS_DOCKER="on";;
@@ -162,6 +166,11 @@ main () {
 	if [ "$OPTIONS_LINUX" = "on" ]; then
 		# Build Linux
 		${MORELLO_AARCH64_HOME}/scripts/build-linux.sh
+	fi
+
+	if [ "$OPTIONS_KSELFTEST" = "on" ]; then
+		# Build Kselftest
+		${MORELLO_AARCH64_HOME}/scripts/build-kselftest.sh
 	fi
 
 	if [ "$OPTIONS_BUILD_LIB" = "on" ]; then

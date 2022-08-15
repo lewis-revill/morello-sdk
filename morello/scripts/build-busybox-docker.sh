@@ -188,13 +188,15 @@ fi
 mkdir -p $MORELLO_ROOTFS_EXAMPLES
 cp -Rf $MORELLO_EXAMPLES/* $MORELLO_ROOTFS_EXAMPLES
 
-# Copy kselftest in rootfs
-cp -Rf ${KBUILD_OUTPUT}/kselftest ${MORELLO_TESTING}
+if [ "$OPTIONS_KSELFTEST" = "on" ]; then
+	# Copy kselftest in rootfs
+	cp -Rf ${KBUILD_OUTPUT}/kselftest ${MORELLO_TESTING}
 
-# Remove compilation artifacts
-cd ${MORELLO_TESTING}/kselftest/arm64/morello/
-rm *.d *.o
-cd ${MORELLO_PROJECTS}
+	# Remove compilation artifacts
+	cd ${MORELLO_TESTING}/kselftest/arm64/morello/
+	rm *.d *.o
+	cd ${MORELLO_PROJECTS}
+fi
 
 # Create Docker File
 mkdir -p $MORELLO_DOCKER
