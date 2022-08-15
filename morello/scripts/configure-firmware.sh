@@ -50,7 +50,7 @@ generate_bsp_home() {
 PROJECTS_LIST=( linux )
 PROJECTS_BSP_LIST=( arm-tf scp uefi edk2-platforms )
 PROJECTS_BSP_OPEN=( grub mbedtls acpica edk2-non-osi )
-PROJECTS_BSP_OPEN_HASH=( a53e530f8ad3770c3b03c208c08ae4162f68e3b1 523f0554b6cdc7ace5d360885c3f5bbcc73ec0e8 HEAD HEAD )
+PROJECTS_BSP_OPEN_HASH=( a53e530f8ad3770c3b03c208c08ae4162f68e3b1 523f0554b6cdc7ace5d360885c3f5bbcc73ec0e8 761b6f167df26081a4e1a150e61ecfe617d74ecf HEAD )
 INDEX=0
 
 if [ ! -f "${CURR_DIR}/.firmware-env" ]; then
