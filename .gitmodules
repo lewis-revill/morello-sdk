@@ -37,3 +37,6 @@
 [submodule "morello/projects/morello-linux-headers"]
 	path = morello/projects/morello-linux-headers
 	url = https://git.morello-project.org/morello/morello-linux-headers.git
+[submodule "morello/projects/morello-busybox"]
+	path = morello/projects/morello-busybox
+	url = https://git.morello-project.org/morello/morello-busybox.git
