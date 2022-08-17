@@ -30,14 +30,6 @@ submodule_update_open() {
 	cd ${CURR_DIR}
 }
 
-submodule_update_projects() {
-	submodule_update projects/$1
-
-	cd projects/$1
-	git checkout -b morello/master
-	cd ${CURR_DIR}
-}
-
 generate_bsp_home() {
 	local PLATFORMS=( fvp soc out )
 
@@ -47,7 +39,6 @@ generate_bsp_home() {
 	done
 }
 
-PROJECTS_LIST=( linux )
 PROJECTS_BSP_LIST=( arm-tf scp uefi edk2-platforms )
 PROJECTS_BSP_OPEN=( grub mbedtls acpica edk2-non-osi )
 PROJECTS_BSP_OPEN_HASH=( a53e530f8ad3770c3b03c208c08ae4162f68e3b1 523f0554b6cdc7ace5d360885c3f5bbcc73ec0e8 761b6f167df26081a4e1a150e61ecfe617d74ecf HEAD )
@@ -63,11 +54,6 @@ if [ ! -f "${CURR_DIR}/.firmware-env" ]; then
 	do
 		submodule_update_open $i ${PROJECTS_BSP_OPEN_HASH[$INDEX]}
 		let INDEX++
-	done
-
-	for i in "${PROJECTS_LIST[@]}"
-	do
-		submodule_update_projects $i
 	done
 
 	touch ${CURR_DIR}/.firmware-env

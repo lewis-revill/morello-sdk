@@ -165,6 +165,7 @@ main () {
 
 	if [ "$OPTIONS_LINUX" = "on" ]; then
 		# Build Linux
+		${MORELLO_AARCH64_HOME}/scripts/configure-linux.sh
 		${MORELLO_AARCH64_HOME}/scripts/build-linux.sh
 	fi
 
