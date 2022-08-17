@@ -34,7 +34,7 @@ submodule_update_projects() {
 	submodule_update projects/$1
 
 	cd projects/$1
-	git checkout -b morello/master origin/master
+	git checkout -b morello/master
 	cd ${CURR_DIR}
 }
 
