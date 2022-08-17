@@ -205,6 +205,7 @@ main () {
 
 	if [ "$OPTIONS_ROOTFS" = "on" ]; then
 		# Build PCuABI busybox
+		${MORELLO_AARCH64_HOME}/scripts/configure-busybox.sh
 		${MORELLO_AARCH64_HOME}/scripts/build-busybox.sh
 	fi
 
