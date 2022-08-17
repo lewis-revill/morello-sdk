@@ -202,6 +202,9 @@ main () {
 		# Build morello-auxv-app
 		cd ${MORELLO_AARCH64_HOME}/examples/morello-auxv-app
 		make
+
+		# Return in $MORELLO_AARCH64_HOME
+		cd ${MORELLO_AARCH64_HOME}
 	fi
 
 	if [ "$OPTIONS_ROOTFS" = "on" ]; then
