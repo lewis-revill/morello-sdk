@@ -203,7 +203,7 @@ mkdir -p $MORELLO_DOCKER
 cat > $MORELLO_DOCKER/Dockerfile << EOF
 FROM scratch
 ADD morello-busybox-docker.tar.xz /
-CMD ["/sbin/init.aarch64"]
+CMD ["/sbin/init.morello.docker"]
 EOF
 
 # Create Docker Image
