@@ -171,6 +171,7 @@ main () {
 
 	if [ "$OPTIONS_KSELFTEST" = "on" ]; then
 		# Build Kselftest
+		${MORELLO_AARCH64_HOME}/scripts/configure-linux.sh
 		${MORELLO_AARCH64_HOME}/scripts/build-kselftest.sh
 	fi
 

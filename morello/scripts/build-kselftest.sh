@@ -20,5 +20,7 @@ mkdir -p ${KBUILD_OUTPUT}
 
 cd ${LINUX_HOME}
 
+echo "kselftest: $(pwd)"
+
 # Build kselftest
 make -j1 -C tools/testing/selftests/ TARGETS=arm64 ARM64_SUBTARGETS=morello -s
