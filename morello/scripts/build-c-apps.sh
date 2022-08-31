@@ -7,6 +7,10 @@ c_apps_clean() {
 }
 
 c_apps_build() {
+	if [ "$OPTIONS_CLEAN" = "on" ]; then
+		c_apps_clean
+	fi
+
 	# Create examples/bin
 	mkdir -p ${EXAMPLES_BIN}
 

@@ -25,6 +25,11 @@ linux_build() {
 
     # Build linux for Morello
     cd ${LINUX_HOME}
+
+    if [ "$OPTIONS_CLEAN" = "on" ]; then
+        linux_clean
+    fi
+
     make $MORELLO_CONFIG && make -j$_NCORES -s
 }
 

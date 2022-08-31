@@ -9,6 +9,10 @@ musl_clean() {
 musl_build() {
 	local _NCORES=$(nproc --all)
 
+	if [ "$OPTIONS_CLEAN" = "on" ]; then
+		musl_clean
+	fi
+
 	mkdir -p ${MUSL_BIN}
 
 	# Build musl

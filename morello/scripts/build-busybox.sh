@@ -21,6 +21,10 @@ busybox_build() {
     # and otherwise it messes things up
     local ALTER_ENV="env -u KBUILD_OUTPUT"
 
+    if [ "$OPTIONS_CLEAN" = "on" ]; then
+        busybox_clean
+    fi
+
     $ALTER_ENV make -j$_NCORES && $ALTER_ENV make CONFIG_PREFIX=${MORELLO_ROOTFS} install
 }
 

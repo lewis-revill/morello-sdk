@@ -52,6 +52,7 @@ OPTIONS_BUILD_LIB="off"
 OPTIONS_LIBSHIM="--disable-libshim"
 OPTIONS_DEV_MODE="off"
 OPTIONS_ENV_INSTALL="off"
+OPTIONS_CLEAN="off"
 
 export OPTIONS_MODE
 export OPTIONS_FIRMWARE
@@ -64,6 +65,7 @@ export OPTIONS_BUILD_LIB
 export OPTIONS_LIBSHIM
 export OPTIONS_DEV_MODE
 export OPTIONS_ENV_INSTALL
+export OPTIONS_CLEAN
 
 help () {
 cat <<EOF
@@ -86,6 +88,8 @@ OPTIONS:
   --rootfs            builds the rootfs for Morello
   --docker            generate a busybox based docker image
   --build-lib         build libraries from source (e.g. compiler_rt, crtobjects...)
+
+  --clean             cleans all the selected projects
 
   --install           [DO NOT USE THIS OPTION OUTSIDE OF A CONTAINER]
 
@@ -110,6 +114,7 @@ main () {
 		--rootfs) OPTIONS_ROOTFS="on" ;;
 		--docker) OPTIONS_DOCKER="on";;
 		--build-lib) OPTIONS_BUILD_LIB="on";;
+		--clean) OPTIONS_CLEAN="on";;
 		--install) OPTIONS_INSTALL="on" ;;
 		--help|-h) help ;;
 	esac
@@ -120,8 +125,10 @@ main () {
 		exit 1
 	fi
 
-	# Cleanup old files
-	rm -fr ${PRJ_BIN} ${BSP_HOME}
+	if [ "$OPTIONS_CLEAN" = "on" ]; then
+		# Cleanup old files
+		rm -fr ${PRJ_BIN} ${BSP_HOME}
+	fi
 
 	echo "RootFS: ${MORELLO_ROOTFS}"
 	echo "Testing: ${MORELLO_TESTING}"

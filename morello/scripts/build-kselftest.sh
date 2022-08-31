@@ -25,6 +25,10 @@ kselftest_build() {
 
     cd ${LINUX_HOME}
 
+    if [ "$OPTIONS_CLEAN" = "on" ]; then
+        kselftest_clean
+    fi
+
     echo "kselftest: $(pwd)"
 
     # Build kselftest

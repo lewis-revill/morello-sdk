@@ -10,6 +10,10 @@ libraries_build() {
 	local CLANG_RESOURCE_DIR=$(clang -print-resource-dir)
 	local LLVM_PROJECT=llvm-project
 
+	if [ "$OPTIONS_CLEAN" = "on" ]; then
+		libraries_clean
+	fi
+
 	# Build crtbegin and crtend objects
 	clang --target=aarch64-linux-gnu -march=morello+c64 -mabi=purecap \
 		-nostdinc -isystem ${MUSL_BIN}/include \
