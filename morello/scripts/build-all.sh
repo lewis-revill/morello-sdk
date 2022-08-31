@@ -121,7 +121,7 @@ main () {
 	fi
 
 	# Cleanup old files
-	rm -fr ${MORELLO_ROOTFS} ${MUSL_BIN} ${COMPILER_RT_BIN} ${PRJ_BIN} ${EXAMPLES_BIN} ${BSP_HOME}
+	rm -fr ${MORELLO_ROOTFS} ${MUSL_BIN} ${COMPILER_RT_BIN} ${PRJ_BIN} ${BSP_HOME}
 
 	echo "RootFS: ${MORELLO_ROOTFS}"
 	echo "Testing: ${MORELLO_TESTING}"
@@ -181,31 +181,8 @@ main () {
 	fi
 
 	if [ "$OPTIONS_C_APPS" = "on" ]; then
-		# Create examples/bin
-		mkdir -p ${EXAMPLES_BIN}
-
-		# Build test-app
-		cd ${MORELLO_AARCH64_HOME}/examples/test-app
-		make
-
-		# Build morello-heap-app
-		cd ${MORELLO_AARCH64_HOME}/examples/morello-heap-app
-		make
-
-		# Build morello-stack-app
-		cd ${MORELLO_AARCH64_HOME}/examples/morello-stack-app
-		make
-
-		# Build morello-pthread-app
-		cd ${MORELLO_AARCH64_HOME}/examples/morello-pthread-app
-		make
-
-		# Build morello-auxv-app
-		cd ${MORELLO_AARCH64_HOME}/examples/morello-auxv-app
-		make
-
-		# Return in $MORELLO_AARCH64_HOME
-		cd ${MORELLO_AARCH64_HOME}
+		# Build C-APPS
+		${MORELLO_AARCH64_HOME}/scripts/build-c-apps.sh
 	fi
 
 	if [ "$OPTIONS_ROOTFS" = "on" ]; then
