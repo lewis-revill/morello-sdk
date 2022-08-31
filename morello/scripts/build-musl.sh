@@ -2,23 +2,30 @@
 
 # SPDX-License-Identifier: BSD-3-Clause
 
-_NCORES=$(nproc --all)
+musl_clean() {
+	rm -fr ${MUSL_BIN}
+}
 
-mkdir -p ${MUSL_BIN}
+musl_build() {
+	local _NCORES=$(nproc --all)
 
-# Build musl
-cd musl
-CC=clang ./configure \
-	--disable-shared \
-	--enable-morello \
-	${OPTIONS_LIBSHIM} \
-	--target=aarch64-linux-musl_purecap \
-	--prefix=${MUSL_BIN}
+	mkdir -p ${MUSL_BIN}
 
-if [ "$?" != 0 ]; then
-    exit 1
-else
-    make -j$_NCORES
-    make install
-fi
+	# Build musl
+	cd musl
+	CC=clang ./configure \
+		--disable-shared \
+		--enable-morello \
+		${OPTIONS_LIBSHIM} \
+		--target=aarch64-linux-musl_purecap \
+		--prefix=${MUSL_BIN}
 
+	if [ "$?" != 0 ]; then
+		exit 1
+	else
+		make -j$_NCORES
+		make install
+	fi
+}
+
+musl_build $@
