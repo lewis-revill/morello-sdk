@@ -16,11 +16,19 @@ export CC
 export CROSS_COMPILE
 export LLVM
 
-mkdir -p ${KBUILD_OUTPUT}
+kselftest_clean() {
+    echo "${KBUILD_OUTPUT} removed by kernel build script."
+}
 
-cd ${LINUX_HOME}
+kselftest_build() {
+    mkdir -p ${KBUILD_OUTPUT}
 
-echo "kselftest: $(pwd)"
+    cd ${LINUX_HOME}
 
-# Build kselftest
-make -j1 -C tools/testing/selftests/ TARGETS=arm64 ARM64_SUBTARGETS=morello -s
+    echo "kselftest: $(pwd)"
+
+    # Build kselftest
+    make -j1 -C tools/testing/selftests/ TARGETS=arm64 ARM64_SUBTARGETS=morello -s
+}
+
+kselftest_build $@
