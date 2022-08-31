@@ -121,7 +121,7 @@ main () {
 	fi
 
 	# Cleanup old files
-	rm -fr ${MORELLO_ROOTFS} ${MUSL_BIN} ${COMPILER_RT_BIN} ${PRJ_BIN} ${BSP_HOME}
+	rm -fr ${MUSL_BIN} ${COMPILER_RT_BIN} ${PRJ_BIN} ${BSP_HOME}
 
 	echo "RootFS: ${MORELLO_ROOTFS}"
 	echo "Testing: ${MORELLO_TESTING}"
