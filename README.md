@@ -1,7 +1,7 @@
 # Morello bootstrap scripts
 
 ## Pre-requisites
-A **Debian 10 based aarch64 or x86_64** environment with **network access** and this repository available inside.  
+A **Debian 11 based aarch64 or x86_64** environment with **network access** and this repository available inside.  
 Make sure you have around 4GB of available disk space for the whole process.
 
 The scripts have not been tested in other environments, although any aarch64 based Linux might work.
@@ -9,25 +9,55 @@ The scripts have not been tested in other environments, although any aarch64 bas
 **Requirements:** GIT 1.8.2 (for submodule branch support).
 
 ## Setting up the build environment
-`# apt install git build-essential python3`
+`$ apt install git build-essential python3`
 
 If cross compiling on x86 you also need:  
-`# apt install libtinfo5 linux-libc-dev-arm64-cross`
+`$ apt install libtinfo5 linux-libc-dev-arm64-cross`
 
 ## Building
 ### Quick build:
 ```
-cd morello-aarch64/morello
-source ./env/morello-aarch64
-./scripts/build-all.sh
+$ cd morello-aarch64/morello
+$ source ./env/morello-aarch64
+$ ./scripts/build-all.sh [options]
 ```
 Which will perform a full cross build on aarch64 host. You can optionally pass `--x86_64` to `build-all.sh` to do a cross-build from an x86_64 host.
+
+```
+$ ./scripts/build-all.sh --help
+
+Usage: ./scripts/build-all.sh [options]
+
+OPTIONS:
+[ARCH]:
+  --aarch64           build on an aarch64 host [DEFAULT]
+  --x86_64            build on an x86_64 host
+
+[LIBC OPTIONS]:
+  --enable-libshim    enable libshim in musl
+  --dev               experimental mode (allows to use more recent versions of musl)
+
+[MODULES]:
+  --firmware          generate the firmware for Morello
+  --linux             builds linux for Morello
+  --kselftest         builds kselftest for Morello
+  --c-apps            builds example c applications for Morello
+  --rootfs            builds the rootfs for Morello
+  --docker            generate a busybox based docker image
+  --build-lib         build libraries from source (e.g. compiler_rt, crtobjects...)
+
+  --clean             cleans all the selected projects
+
+  --install           [DO NOT USE THIS OPTION OUTSIDE OF A CONTAINER]
+
+  --help              this help message
+```
 
 On success, your binary is `morello-aarch64/morello/examples/bin/main`.
 
 Note: To reset the environment to the default configuration execute:
 ```
-source ./env/morello-aarch64-restore
+$ source ./env/morello-aarch64-restore
 ```
 
 ### Step by step build explanation
