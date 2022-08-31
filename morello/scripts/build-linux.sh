@@ -16,8 +16,16 @@ export CC
 export CROSS_COMPILE
 export LLVM
 
-mkdir -p ${KBUILD_OUTPUT}
+linux_clean() {
+    make mrproper && make clean
+}
 
-# Build linux for Morello
-cd ${LINUX_HOME}
-make mrproper && make clean && make $MORELLO_CONFIG && make -j$_NCORES -s
+linux_build() {
+    mkdir -p ${KBUILD_OUTPUT}
+
+    # Build linux for Morello
+    cd ${LINUX_HOME}
+    make $MORELLO_CONFIG && make -j$_NCORES -s
+}
+
+linux_build $@
