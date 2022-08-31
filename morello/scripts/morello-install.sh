@@ -32,7 +32,7 @@ cleanup_morello_env() {
 	rm -fr ${MORELLO_HOME}/llvm/.git
 }
 
-main() {
+morello_install() {
 	if [ "$EUID" -ne 0 ]; then
 		echo "[DO NOT USE --install OPTION OUTSIDE OF A CONTAINER]"
 		exit
@@ -49,4 +49,4 @@ main() {
 	cleanup_morello_env
 }
 
-main $@
+morello_install $@
