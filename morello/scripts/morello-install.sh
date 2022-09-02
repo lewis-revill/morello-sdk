@@ -25,7 +25,7 @@ copy_morello_toolchain() {
 }
 
 create_morello_env() {
-	cp -Rf ${MORELLO_AARCH64_HOME}/env/morello-aarch64.template ${MORELLO_HOME}/env/morello-aarch64
+	cp -Rf ${MORELLO_AARCH64_HOME}/env/morello-pcuabi-env.template ${MORELLO_HOME}/env/morello-pcuabi-env
 }
 
 cleanup_morello_env() {
