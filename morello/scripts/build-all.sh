@@ -154,18 +154,6 @@ main () {
 		# Configure Firmware for Morello
 		${MORELLO_AARCH64_HOME}/scripts/configure-firmware.sh
 
-		# Build SCP
-		${MORELLO_AARCH64_HOME}/scripts/build-scp.sh
-
-		# Build UEFI (UEFI must be built before then arm-tf)
-		${MORELLO_AARCH64_HOME}/scripts/build-uefi.sh
-
-		# Build ARM-TF
-		${MORELLO_AARCH64_HOME}/scripts/build-arm-tf.sh
-
-		# Generate Firmware
-		${MORELLO_AARCH64_HOME}/scripts/generate-firmware.sh
-
 		# Build GRUB
 		${MORELLO_AARCH64_HOME}/scripts/build-grub.sh
 	fi

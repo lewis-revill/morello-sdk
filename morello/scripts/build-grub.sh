@@ -7,6 +7,7 @@ platforms=( soc fvp )
 copy_grub_objects() {
 	for p in "${platforms[@]}"
 	do
+		mkdir -p "${BSP_HOME}/firmware/$p"
 		cp ${BSP_HOME}/out/grub/grub.efi ${BSP_HOME}/$p/grub
 		cp ${MORELLO_PROJECTS}/config/grub_$p.cfg ${BSP_HOME}/$p/grub
 		cp ${BSP_HOME}/$p/grub/* ${BSP_HOME}/firmware/$p/

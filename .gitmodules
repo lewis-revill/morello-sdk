@@ -7,33 +7,12 @@
 [submodule "morello/musl"]
 	path = morello/musl
 	url = https://git.morello-project.org/morello/musl-libc.git
-[submodule "morello/projects/bsp/arm-tf"]
-	path = morello/projects/bsp/arm-tf
-	url = https://git.morello-project.org/morello/trusted-firmware-a
-[submodule "morello/projects/bsp/mbedtls"]
-	path = morello/projects/bsp/mbedtls
-	url = https://github.com/ARMmbed/mbedtls
-[submodule "morello/projects/bsp/scp"]
-	path = morello/projects/bsp/scp
-	url = https://git.morello-project.org/morello/scp-firmware
-[submodule "morello/projects/bsp/uefi"]
-	path = morello/projects/bsp/uefi
-	url = https://git.morello-project.org/morello/edk2
 [submodule "morello/projects/bsp/grub"]
 	path = morello/projects/bsp/grub
 	url = https://git.savannah.gnu.org/git/grub
 [submodule "morello/projects/linux"]
 	path = morello/projects/linux
 	url = https://git.morello-project.org/morello/kernel/linux.git
-[submodule "morello/projects/bsp/edk2-platforms"]
-	path = morello/projects/bsp/edk2-platforms
-	url = https://git.morello-project.org/morello/edk2-platforms.git
-[submodule "morello/projects/bsp/acpica"]
-	path = morello/projects/bsp/acpica
-	url = https://github.com/acpica/acpica.git
-[submodule "morello/projects/bsp/edk2-non-osi"]
-	path = morello/projects/bsp/edk2-non-osi
-	url = https://github.com/tianocore/edk2-non-osi.git
 [submodule "morello/projects/morello-linux-headers"]
 	path = morello/projects/morello-linux-headers
 	url = https://git.morello-project.org/morello/morello-linux-headers.git
