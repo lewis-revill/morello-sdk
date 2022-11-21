@@ -8,7 +8,7 @@ CURR_DIR=$(pwd)
 
 OPTIONS_MODE="${OPTIONS_MODE:-aarch64}"
 BRANCH=
-MUSL_DEV_COMMIT=4111f17d06937db9721e86edde0e77de1bd9c3fa
+MUSL_DEV_COMMIT=fed6dda4b524188d7f9ad352d921c0b2ba058714
 
 reset_musl_dev () {
 	if [ ! -z ${MUSL_DEV_COMMIT} ]; then
@@ -28,8 +28,7 @@ checkout_musl_tag () {
 if [ "$OPTIONS_MODE" = "aarch64" ]; then
 	BRANCH="morello/linux-aarch64-release-$MORELLO_COMPILER_VERSION"
 elif [ "$OPTIONS_MODE" = "x86_64" ]; then
-	BRANCH_S="morello/linux-aarch64-release-$MORELLO_COMPILER_VERSION"
-	BRANCH="morello/baremetal-release-$MORELLO_COMPILER_VERSION"
+	BRANCH="morello/linux-release-$MORELLO_COMPILER_VERSION"
 fi
 
 PROJECTS_LIST=( llvm musl )
@@ -40,7 +39,11 @@ if [ ! -f "${CURR_DIR}/.llvm-env" ]; then
 	do
 		echo "$i updating progress..."
 		# Populate repositories
-		git submodule update --init --recursive --progress $i
+		if [ $i == "llvm" ]; then
+			git submodule update --init --recursive --depth 1 --progress $i
+		else
+			git submodule update --init --recursive --progress $i
+		fi
 		git submodule update --remote --merge $i
 	done
 
@@ -49,7 +52,7 @@ if [ ! -f "${CURR_DIR}/.llvm-env" ]; then
 		do
 			echo "$i updating progress..."
 			# Populate repositories
-			git submodule update --init --recursive --progress $i
+			git submodule update --init --recursive --depth 1 --progress $i
 			git submodule update --remote --merge $i
 		done
 	fi
@@ -58,19 +61,10 @@ if [ ! -f "${CURR_DIR}/.llvm-env" ]; then
 fi
 
 # Config Clang
-if [ "$OPTIONS_MODE" = "aarch64" ]; then
-	cd ${CURR_DIR}/llvm
-	git checkout $BRANCH
-elif [ "$OPTIONS_MODE" = "x86_64" ]; then
-	cd ${CURR_DIR}/llvm
-	git clean -fd
-	git checkout $BRANCH_S
-	mkdir -p ${CURR_DIR}/.tmp/aarch64-unknown-linux-musl_purecap
-	cp -Rfv ${CURR_DIR}/llvm/lib/clang/13.0.0/lib/aarch64-unknown-linux-musl_purecap/* ${CURR_DIR}/.tmp/aarch64-unknown-linux-musl_purecap
-	git checkout $BRANCH
-	mv ${CURR_DIR}/.tmp/aarch64-unknown-linux-musl_purecap ${CURR_DIR}/llvm/lib/clang/13.0.0/lib/
-	rm ${CURR_DIR}/.tmp -fr
-fi
+cd ${CURR_DIR}/llvm && \
+git remote set-branches origin $BRANCH && \
+git fetch --depth 1 origin $BRANCH && \
+git checkout $BRANCH
 
 if [ "$BUILD_LIB" = "on" ]; then
 	# Config Clang sources to build compiler-rt for Morello
