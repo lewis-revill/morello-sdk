@@ -4,7 +4,7 @@ CC=clang
 ELF_PATCH=morello_elf
 CMP=cmp -l
 GAWK=gawk
-MUSL_HOME=../../musl-bin
+MUSL_HOME?=../../musl-bin
 CLANG_RESOURCE_DIR=$(shell clang -print-resource-dir)
 
 OUT=../bin
