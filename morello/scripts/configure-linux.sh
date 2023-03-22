@@ -10,7 +10,7 @@ submodule_update() {
 	echo "$1 updating progress..."
 	# Populate repositories
 	git submodule update --init --recursive --progress $1
-	git submodule update --remote --merge $1
+	git submodule update --remote --checkout $1
 }
 
 submodule_update_projects() {
