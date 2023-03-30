@@ -21,7 +21,10 @@ copy_morello_toolchain() {
 
 	cp -Rf ${MORELLO_AARCH64_HOME}/musl-bin ${MORELLO_HOME}/musl
 	cp -Rf ${MORELLO_AARCH64_HOME}/projects/morello-linux-headers/usr ${MORELLO_HOME}/
-	cp -Rf ${MORELLO_AARCH64_HOME}/morello-docker ${MORELLO_HOME}/docker
+
+	if [ -d "${MORELLO_AARCH64_HOME}/morello-docker" ]; then
+		cp -Rf ${MORELLO_AARCH64_HOME}/morello-docker ${MORELLO_HOME}/docker
+	fi
 }
 
 create_morello_env() {
