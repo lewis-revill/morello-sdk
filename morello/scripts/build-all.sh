@@ -49,7 +49,6 @@ OPTIONS_C_APPS="off"
 OPTIONS_ROOTFS="off"
 OPTIONS_DOCKER="off"
 OPTIONS_BUILD_LIB="off"
-OPTIONS_LIBSHIM="--disable-libshim"
 OPTIONS_DEV_MODE="off"
 OPTIONS_ENV_INSTALL="off"
 OPTIONS_CLEAN="off"
@@ -62,7 +61,6 @@ export OPTIONS_C_APPS
 export OPTIONS_ROOTFS
 export OPTIONS_DOCKER
 export OPTIONS_BUILD_LIB
-export OPTIONS_LIBSHIM
 export OPTIONS_DEV_MODE
 export OPTIONS_ENV_INSTALL
 export OPTIONS_CLEAN
@@ -105,7 +103,6 @@ main () {
 	case $arg in
 		--aarch64) OPTIONS_MODE="aarch64" ;;
 		--x86_64) OPTIONS_MODE="x86_64" ;;
-		--enable-libshim) OPTIONS_LIBSHIM="--enable-libshim" ;;
 		--dev) OPTIONS_DEV_MODE="on" ;;
 		--firmware) OPTIONS_FIRMWARE="on" ;;
 		--linux) OPTIONS_LINUX="on" ;;
