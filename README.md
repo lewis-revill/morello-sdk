@@ -103,3 +103,88 @@ $ docker image prune
 ```
 
 For further information please refer to the [Docker](https://docs.docker.com/) documentation.
+
+# Build an hello world application using morello-pcuabi-env development kit
+
+To write and build an hello world application please make sure you started the morello-pcuabi-env container following the instructions listed above.  
+Once the cointainer is started, if everything went well, you sould be welcomed by the prompt:
+```
+morello@<container-id>:~/workspace$
+```
+At this point create the following file and directory structure:
+```
+workspace/
+ |-> helloworld/
+      |-> main.c
+      |-> Makefile
+```
+Edit the **Makefile** and insert the code below:
+```
+# SPDX-License-Identifier: BSD-3-Clause
+
+CC=clang
+ELF_PATCH=morello_elf
+CMP=cmp -l
+GAWK=gawk
+MUSL_HOME?=../../musl-bin
+CLANG_RESOURCE_DIR=$(shell clang -print-resource-dir)
+
+OUT=./bin
+# we want the same result no matter where we're cross compiling (x86_64, aarch64)
+TARGET?=aarch64-linux-musl_purecap
+
+all:
+	mkdir -p $(OUT)
+	$(CC) -c -g -march=morello+c64 \
+		--target=$(TARGET) --sysroot $(MUSL_HOME) \
+		main.c -o $(OUT)/morello-helloworld.c.o
+	$(CC) -fuse-ld=lld -march=morello+c64 \
+		--target=$(TARGET) --sysroot $(MUSL_HOME) \
+		-rtlib=compiler-rt \
+		$(OUT)/morello-helloworld.c.o \
+		-o $(OUT)/morello-helloworld -static
+	$(ELF_PATCH) $(OUT)/morello-helloworld
+	rm $(OUT)/morello-helloworld.c.o
+
+clean:
+	rm $(OUT)/morello-helloworld
+```
+Edit **main.c** and insert the code below:
+```
+/* SPDX-License-Identifier: BSD-3-Clause */
+
+#include <stdio.h>
+
+int main()
+{
+	printf("Hello from Morello!!\n");
+
+	return 0;
+}
+```
+At this point you have everything you need. Source the develpment kit enviromnent file:
+```
+source /morello/env/morello-pcuabi-env
+``` 
+and run:
+```
+make
+```
+If everything went well your **helloworld** binary for morello should be waiting for you in **workspace/helloworld/bin**.  
+
+**Note:** the same binary will be accessible outside of the container at: **<project>/workspace/helloworld/bin**.  
+
+## Important notes
+
+**/morello/env/morello-pcuabi-env** exposes the following environment variables:
+```
+MORELLO_HOME=/morello
+MUSL_HOME=/morello/musl
+...
+```
+**MORELLO_HOME** points to the root directory of the development kit.  
+**MUSL_HOME** points to the musl C library binaries.  
+The kernel headers are contained in **/morello/usr/include**.  
+**clang** compiler is in the path after sourcing **/morello/env/morello-pcuabi-env**.  
+  
+Please make sure that the Makefile of the application you are trying to port to Morello using this development kit is compliant with these assumptions.
