@@ -188,3 +188,7 @@ The kernel headers are contained in **/morello/usr/include**.
 **clang** compiler is in the path after sourcing **/morello/env/morello-pcuabi-env**.  
   
 Please make sure that the Makefile of the application you are trying to port to Morello using this development kit is compliant with these assumptions.
+
+# Container verification
+
+morello-pcuabi-env generated containers are signed using [consign](https://github.com/sigstore/cosign). To verify the validity of a container before donwloading it please follow the information contained in the [.cosign](.cosign/README.md) directory.
