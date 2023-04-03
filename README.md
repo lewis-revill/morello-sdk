@@ -1,114 +1,105 @@
-# Morello bootstrap scripts
+# Introduction
 
-## Pre-requisites
-A **Debian 11 based aarch64 or x86_64** environment with **network access** and this repository available inside.  
-Make sure you have around 4GB of available disk space for the whole process.
+## Docker image for morello-pcuabi-env based on Debian.
 
-The scripts have not been tested in other environments, although any aarch64 based Linux might work.
+This page contains some simple instructions to get you started on Morello. In less than 10 minutes you should be able to setup a docker container with everything you need to build an application for Morello.
 
-**Requirements:** GIT 1.8.2 (for submodule branch support).
+**To set it up please follow the instructions below.**
 
-## Setting up the build environment
-`$ apt install git build-essential python3`
+**Note:** This approach requires a Morello Board to deploy the final application.
 
-If cross compiling on x86 you also need:  
-`$ apt install libtinfo5 linux-libc-dev-arm64-cross`
+If you want to replicate the development environment directly on your system without using docker please follow the instructions at [morello-pcuabi-env setup](MORELLO-PCUABI-ENV.md) and use the **morello/mailine** branch of this project.
 
-## Building
-### Quick build:
+# Setup
+
+Install docker:
 ```
-$ cd morello-pcuabi-env/morello
-$ source ./env/morello-pcuabi-env
-$ ./scripts/build-all.sh [options]
-```
-Which will perform a full cross build on aarch64 host. You can optionally pass `--x86_64` to `build-all.sh` to do a cross-build from an x86_64 host.
-
-```
-$ ./scripts/build-all.sh --help
-
-Usage: ./scripts/build-all.sh [options]
-
-OPTIONS:
-[ARCH]:
-  --aarch64           build on an aarch64 host [DEFAULT]
-  --x86_64            build on an x86_64 host
-
-[LIBC OPTIONS]:
-  --enable-libshim    enable libshim in musl
-  --dev               experimental mode (allows to use more recent versions of musl)
-
-[MODULES]:
-  --firmware          generate the firmware for Morello
-  --linux             builds linux for Morello
-  --kselftest         builds kselftest for Morello
-  --c-apps            builds example c applications for Morello
-  --rootfs            builds the rootfs for Morello
-  --docker            generate a busybox based docker image
-  --build-lib         build libraries from source (e.g. compiler_rt, crtobjects...)
-
-  --clean             cleans all the selected projects
-
-  --install           [DO NOT USE THIS OPTION OUTSIDE OF A CONTAINER]
-
-  --help              this help message
+$ curl -sSL https://get.docker.com | sh
 ```
 
-On success, your binary is `morello-pcuabi-env/morello/examples/bin/main`.
+Install docker-compose:
 
-Note: To reset the environment to the default configuration execute:
+Latest: v2.17.2
+
+Installation command:
 ```
-$ source ./env/morello-pcuabi-env-restore
+$ sudo curl -L "https://github.com/docker/compose/releases/download/v2.17.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 ```
 
-### Step by step build explanation
-In `morello-pcuabi-env/morello`:
+Provide correct permissions to docker compose:
+```
+$ sudo chmod +x /usr/local/bin/docker-compose
+```
 
-1. `env/morello-pcuabi-env`: set up $PATH for the Morello toolchain  
-Sourcing this sets up $PATH such that the Morello supporting LLVM overshadows the system one (since not upstreamed yet).  
-**Required for steps 4 to 6**  
+Test docker-compose:
+```
+$ docker-compose --version
+```
 
-1. `scripts/build-all.sh`: Runs all steps in sequence  
-Download and compile everything.
-Accepts either `--x86_64` or `--aarch64`. The default is `--aarch64` and is assumed if neither is specified.  
-The `--aarch64` switch downloads and builds everything from an aarch64 host.  
-Passing `--x86_64` assumes an x86\_64 host  
+# Usage
 
-1. `scripts/download-llvm-musl.sh`: Download required tools  
-This clones a binary release of LLVM to `llvm`, its sources to `llvm-project` and the musl sources to `musl`.  
-Accepts a variable MODE={aarch64, x86_64} and will checkout aarch64 or x86\_64 binaries respectively.  
-**NOTE**: this process **downloads about 3GB**. When building on an emulator (e.g. qemu) this can be done on the host machine and copied over.  
+Create the following workspace structure:
 
-1. `scripts/build-musl.sh`: Build Musl  
-This runs `./configure && make` in musl's root directory **with libshim enabled**.  
-Downloads a few MB of dependencies. Takes a while.  
+```
+<project>/
+  |-> workspace/
+  |-> docker-compose.yml
+```
 
-1. `scripts/build-libraries.sh`: Build Compiler-RT  
-This script builds llvm's compiler-rt and the crt*.o objects.  
+Create a `docker-compose.yml` file and map the morello directory into /morello as follows:
 
-1. `tools/Makefile`: Compile `morello_elf`  
-This utility sets up the ELF headers of the Morello binary. Necessary since the ELF format is not finalized yet.  
+```
+# Docker composer file for Morello Linux
+version: '3.8'
+services:
+  <project>-morello-pcuabi-env:
+    image: "git.morello-project.org:5050/morello/morello-pcuabi-env/morello-pcuabi-env:latest"
+    container_name: "<project>-morello-pcuabi-env"
+    volumes:
+      - ./workspace:/home/morello/workspace
+    tty: true
+    restart: unless-stopped
+```
 
-1. `examples/test-app/Makefile`: Compile a hello world program  
-Compiles a simple hello world for the Morello architecture and passes it to morello\_elf.  
-Output is in `examples/bin`.  
+Clone the <project> you want to build in <project>/workspace:
+```
+cd <project>/workspace
+git clone <project-repo>
+```
 
-1. `examples/morello-heap-app/Makefile`: Compile a capability based heap test program  
-Compiles a simple capability based heap test for the Morello architecture and passes it to morello\_elf.  
-Output is in `examples/bin`.  
+Then, bring up the container (from <project>/):
+```
+$ docker-compose up -d
+```
 
-1. `examples/morello-stack-app/Makefile`: Compile a capability based stack test program  
-Compiles a simple capability based stack test for the Morello architecture and passes it to morello\_elf.  
-**NOTE** : To see the differences in behavior in between aarch64 and Morello, it is possible to recompile the same program for aarch64 and compare the results with what happens on Morello. This should point out that just recompiling the same code on Morello makes it more robust and secure.  
-Output for Morello is in `examples/bin`.  
+To enter into the container, run the command:
 
-**NOTE**: Please refer to the following links to have a clear understanding of the implemented process:
+```
+$ docker exec -it -u morello <project>-morello-pcuabi-env /bin/bash
+```
 
-* refer to `man gcc` and look up each argument  
-* refer to the [gcc docs](https://gcc.gnu.org/onlinedocs/gcc/) and read through the chapters on Standards and Standard Libraries  
-* refer to [this gentoo doc](https://dev.gentoo.org/~vapier/crt.txt) for an explanation of what all the crt files do  
-* refer to musl's source code for what the other `crt`s do  
-(crt = C RunTime)  
+Have a lot of fun!
 
-### Note on samba
-Building this on a samba share is possible, but it takes longer. The llvm builds use **symlinks** which need extra care.
+**Note (1):** <project> must be replaced by the name of the project you are trying to build.  
+**Note (2):** Once you started the docker container the files of your project are accessible at **/home/morello/workspace/<project>**.
 
+## Cleanup the morello-pcuabi-env container
+
+**/!\ WARNING: execute this step only if there are no more <project>s using the morello-pcuabi-env container.**
+
+To recover the space used by the <project>-morello-pcuabi-env container execute the following commands:
+
+**STEP 1:** Stop all the projects using morello-pcuabi-env container.
+
+```
+$ docker stop <project>-morello-pcuabi-env
+```
+
+**STEP 2:** Remove all the files belonging to the morello-pcuabi-env container.
+
+```
+$ docker image rm git.morello-project.org:5050/morello/morello-pcuabi-env/morello-pcuabi-env:latest -f
+$ docker image prune
+```
+
+For further information please refer to the [Docker](https://docs.docker.com/) documentation.
