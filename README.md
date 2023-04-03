@@ -46,7 +46,7 @@ Create the following workspace structure:
   |-> docker-compose.yml
 ```
 
-Create a `docker-compose.yml` file and map the morello directory into /morello as follows:
+Create a `docker-compose.yml` file and map the morello directory into `<project>/` as follows:
 
 ```
 # Docker composer file for Morello Linux
@@ -61,13 +61,13 @@ services:
     restart: unless-stopped
 ```
 
-Clone the <project> you want to build in <project>/workspace:
+Clone the `<project>` you want to build in `<project>/workspace`:
 ```
 cd <project>/workspace
 git clone <project-repo>
 ```
 
-Then, bring up the container (from <project>/):
+Then, bring up the container (from `<project>/)`:
 ```
 $ docker-compose up -d
 ```
@@ -80,14 +80,14 @@ $ docker exec -it -u morello <project>-morello-pcuabi-env /bin/bash
 
 Have a lot of fun!
 
-**Note (1):** <project> must be replaced by the name of the project you are trying to build.  
-**Note (2):** Once you started the docker container the files of your project are accessible at **/home/morello/workspace/<project>**.
+**Note (1):** `<project>` must be replaced by the name of the project you are trying to build.  
+**Note (2):** Once you started the docker container the files of your project are accessible at `/home/morello/workspace/<project>`.
 
 ## Cleanup the morello-pcuabi-env container
 
-**/!\ WARNING: execute this step only if there are no more <project>s using the morello-pcuabi-env container.**
+**/!\ WARNING: execute this step only if there are no more `<project>s` using the morello-pcuabi-env container.**
 
-To recover the space used by the <project>-morello-pcuabi-env container execute the following commands:
+To recover the space used by the `<project>-morello-pcuabi-env` container execute the following commands:
 
 **STEP 1:** Stop all the projects using morello-pcuabi-env container.
 
@@ -172,7 +172,7 @@ make
 ```
 If everything went well your **helloworld** binary for morello should be waiting for you in **workspace/helloworld/bin**.  
 
-**Note:** the same binary will be accessible outside of the container at: **<project>/workspace/helloworld/bin**.  
+**Note:** the same binary will be accessible outside of the container at: `<project>/workspace/helloworld/bin`.  
 
 ## Important notes
 
