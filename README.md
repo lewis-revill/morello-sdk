@@ -14,7 +14,7 @@ The development kit includes includes:
 
 **Note:** This approach requires a Morello Board to deploy the final application.
 
-If you want to replicate the development environment directly on your system without using docker please follow the instructions at [morello-pcuabi-env setup](MORELLO-PCUABI-ENV.md) and use the **morello/mainline** branch of this project.
+If you want to replicate the development environment directly on your system without using docker please follow the instructions at [morello-pcuabi-env setup](docs/MORELLO-PCUABI-ENV.md) and use the **morello/mainline** branch of this project.
 
 # Setup
 
