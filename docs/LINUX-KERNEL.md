@@ -1,6 +1,6 @@
 # Build the linux kernel for morello using morello-pcuabi-env
 
-This document covers the steps to build the linux kernel for morello using morello-pcuabi-env.
+This document covers the steps to build the [linux kernel](https://git.morello-project.org/morello/kernel/linux) for morello using morello-pcuabi-env.
 
 ## Usage
 

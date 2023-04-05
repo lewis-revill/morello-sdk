@@ -1,6 +1,6 @@
 # Build the musl libC for morello using morello-pcuabi-env
 
-This document covers the steps to build the musl libC for morello using morello-pcuabi-env.
+This document covers the steps to build the [musl libC](https://git.morello-project.org/morello/musl-libc) for morello using morello-pcuabi-env.
 
 ## Usage
 
