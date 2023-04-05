@@ -58,6 +58,8 @@ $ docker exec -it -u morello linux-morello-pcuabi-env /bin/bash
 Inside the container, run the commands:
 ```
 cd linux
+source /morello/env/morello-pcuabi-env
+source ../linux.env
 make mrproper && make morello_transitional_pcuabi_defconfig && make
 ```
 
