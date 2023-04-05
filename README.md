@@ -184,6 +184,11 @@ If everything went well your **helloworld** binary for morello should be waiting
 
 **Note:** the same binary will be accessible outside of the container at: `<project>/workspace/helloworld/bin`.  
 
+## Examples of projects that can be built via morello-pcuabi-env
+
+This section containt the instructions to build some projects via morello-pcuabi-env:
+- [Linux Kernel](docs/LINUX-KERNEL.md)
+
 ## Important notes
 
 **/morello/env/morello-pcuabi-env** exposes the following environment variables:
