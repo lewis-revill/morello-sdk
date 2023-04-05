@@ -33,18 +33,12 @@ OPTIONS:
   --aarch64           build on an aarch64 host [DEFAULT]
   --x86_64            build on an x86_64 host
 
-[LIBC OPTIONS]:
-  --enable-libshim    enable libshim in musl
-  --dev               experimental mode (allows to use more recent versions of musl)
-
 [MODULES]:
   --firmware          generate the firmware for Morello
   --linux             builds linux for Morello
   --kselftest         builds kselftest for Morello
   --c-apps            builds example c applications for Morello
   --rootfs            builds the rootfs for Morello
-  --docker            generate a busybox based docker image
-  --build-lib         build libraries from source (e.g. compiler_rt, crtobjects...)
 
   --clean             cleans all the selected projects
 

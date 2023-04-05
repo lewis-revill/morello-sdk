@@ -4,6 +4,12 @@
 
 This page contains some simple instructions to get you started on Morello. In less than 10 minutes you should be able to setup a docker container with everything you need to build an application for Morello.
 
+The development kit includes includes:
+- [llvm](https://git.morello-project.org/morello/llvm-project-releases)
+- [musl libC](https://git.morello-project.org/morello/musl-libc)
+- [linux kernel headers](https://git.morello-project.org/morello/morello-linux-headers)
+- various utilities
+
 **To set it up please follow the instructions below.**
 
 **Note:** This approach requires a Morello Board to deploy the final application.
@@ -46,6 +52,8 @@ Create the following workspace structure:
   |-> docker-compose.yml
 ```
 
+**Note:** `<project>` must be replaced by the name of the project you are trying to build. The same thing applies to the rest of the document.  
+
 Create a `docker-compose.yml` file and map the morello directory into `<project>/` as follows:
 
 ```
@@ -67,6 +75,8 @@ cd <project>/workspace
 git clone <project-repo>
 ```
 
+**Note:** To create a simple helloworld project please refer to the relevant [section](#build-an-hello-world-application-using-morello-pcuabi-env-development-kit).
+
 Then, bring up the container (from `<project>/)`:
 ```
 $ docker-compose up -d
@@ -80,8 +90,7 @@ $ docker exec -it -u morello <project>-morello-pcuabi-env /bin/bash
 
 Have a lot of fun!
 
-**Note (1):** `<project>` must be replaced by the name of the project you are trying to build.  
-**Note (2):** Once you started the docker container the files of your project are accessible at `/home/morello/workspace/<project>`.
+**Note:** Once you started the docker container the files of your project are accessible at `/home/morello/workspace/<project>`.
 
 ## Cleanup the morello-pcuabi-env container
 
@@ -122,10 +131,11 @@ Edit the **Makefile** and insert the code below:
 ```
 # SPDX-License-Identifier: BSD-3-Clause
 
+# This Makefile will compile an helloworld application using Morello Clang and the Musl libc compiled for purecap.
+
 CC=clang
+# ELF_PATCH is used to check that the correct elf flag for Morello is present
 ELF_PATCH=morello_elf
-CMP=cmp -l
-GAWK=gawk
 MUSL_HOME?=../../musl-bin
 CLANG_RESOURCE_DIR=$(shell clang -print-resource-dir)
 
@@ -191,4 +201,4 @@ Please make sure that the Makefile of the application you are trying to port to 
 
 # Container verification
 
-morello-pcuabi-env generated containers are signed using [consign](https://github.com/sigstore/cosign). To verify the validity of a container before donwloading it please follow the information contained in the [.cosign](.cosign/README.md) directory.
+morello-pcuabi-env generated containers are signed using [cosign](https://github.com/sigstore/cosign). To verify the validity of a container before donwloading it please follow the information contained in the [.cosign](.cosign/README.md) directory.
