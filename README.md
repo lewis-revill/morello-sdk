@@ -14,7 +14,7 @@ The development kit includes includes:
 
 **Note:** This approach requires a Morello Board to deploy the final application.
 
-If you want to replicate the development environment directly on your system without using docker please follow the instructions at [morello-pcuabi-env setup](MORELLO-PCUABI-ENV.md) and use the **morello/mailine** branch of this project.
+If you want to replicate the development environment directly on your system without using docker please follow the instructions at [morello-pcuabi-env setup](MORELLO-PCUABI-ENV.md) and use the **morello/mainline** branch of this project.
 
 # Setup
 
@@ -113,10 +113,10 @@ $ docker image prune
 
 For further information please refer to the [Docker](https://docs.docker.com/) documentation.
 
-# Build an hello world application using morello-pcuabi-env development kit
+# Build a hello world application using morello-pcuabi-env development kit
 
-To write and build an hello world application please make sure you started the morello-pcuabi-env container following the instructions listed above.  
-Once the cointainer is started, if everything went well, you sould be welcomed by the prompt:
+To write and build a hello world application please make sure you started the morello-pcuabi-env container following the instructions listed above.  
+Once the container is started, if everything went well, you should be welcomed by the prompt:
 ```
 morello@<container-id>:~/workspace$
 ```
@@ -172,7 +172,7 @@ int main()
 	return 0;
 }
 ```
-At this point you have everything you need. Source the develpment kit enviromnent file:
+At this point you have everything you need. Source the development kit environment file:
 ```
 source /morello/env/morello-pcuabi-env
 ``` 
