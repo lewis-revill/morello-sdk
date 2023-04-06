@@ -62,7 +62,7 @@ source ../morello-doom.env
 make
 ```
 
-**Optional: ** Build the sound server:
+**Optional:** Build the sound server:
 
 ```
 cd morello-doom/sndserv
@@ -71,7 +71,7 @@ make
 
 Have a lot of fun!
 
-**Note (1):** The sound server should be built after doom.
+**Note (1):** The sound server should be built after doom.  
 **Note (2):** `-j<N>` where **N** is the number of cores can ben added to the last `make` command.  
 **Note (3):** Once you started the docker container the files of your project are accessible at `/home/morello/workspace/morello-doom`.
 
