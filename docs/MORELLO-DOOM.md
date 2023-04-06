@@ -58,7 +58,7 @@ Inside the container, run the commands:
 ```
 cd morello-doom/doom
 source /morello/env/morello-pcuabi-env
-source ../morello-doom.env
+source ../../morello-doom.env
 make
 ```
 
