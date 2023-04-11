@@ -31,6 +31,9 @@ kselftest_build() {
 
     echo "kselftest: $(pwd)"
 
+    # Build headers
+    make headers_install HOSTCC=clang CC=clang ARCH=arm64 INSTALL_HDR_PATH=$KBUILD_OUTPUT
+
     # Build kselftest
     make -j1 -C tools/testing/selftests/ TARGETS=arm64 ARM64_SUBTARGETS=morello -s
 }
