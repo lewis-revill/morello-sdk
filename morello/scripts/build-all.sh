@@ -136,6 +136,9 @@ main () {
 	# Configure LLVM and musl for Morello
 	${MORELLO_AARCH64_HOME}/scripts/configure-llvm-musl.sh
 
+	# Configure linux headers
+	${MORELLO_AARCH64_HOME}/scripts/configure-linux-headers.sh
+
 	# Build morello_elf
 	cd ${MORELLO_AARCH64_HOME}/tools
 	make

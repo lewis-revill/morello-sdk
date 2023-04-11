@@ -8,6 +8,7 @@
 /morello/.firmware-env
 /morello/.gcc-toolchain
 /morello/.linux-env
+/morello/.linux-headers-env
 /morello/.busybox-env
 /morello/morello-docker/
 /morello/linux-out/

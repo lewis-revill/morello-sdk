@@ -21,13 +21,13 @@ submodule_update_projects() {
 	cd ${CURR_DIR}
 }
 
-PROJECTS_LIST=( morello-busybox )
+PROJECTS_LIST=( morello-linux-headers )
 
-if [ ! -f "${CURR_DIR}/.busybox-env" ]; then
+if [ ! -f "${CURR_DIR}/.linux-headers-env" ]; then
 	for i in "${PROJECTS_LIST[@]}"
 	do
 		submodule_update_projects $i
 	done
 
-	touch ${CURR_DIR}/.busybox-env
+	touch ${CURR_DIR}/.linux-headers-env
 fi
