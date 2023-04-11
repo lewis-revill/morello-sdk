@@ -38,11 +38,9 @@ OPTIONS:
   --linux             builds linux for Morello
   --kselftest         builds kselftest for Morello
   --c-apps            builds example c applications for Morello
-  --rootfs            builds the rootfs for Morello
+  --rootfs            builds a busybox based rootfs for Morello
 
   --clean             cleans all the selected projects
-
-  --install           [DO NOT USE THIS OPTION OUTSIDE OF A CONTAINER]
 
   --help              this help message
 ```
