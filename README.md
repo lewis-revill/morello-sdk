@@ -189,6 +189,7 @@ If everything went well your **helloworld** binary for morello should be waiting
 This section containt the instructions to build some projects via morello-pcuabi-env:
 - [Linux Kernel](docs/LINUX-KERNEL.md)
 - [Musl libC](docs/MUSL-LIBC.md)
+- [Linux Test Project](docs/LTP.md)
 - [morello-doom](docs/MORELLO-DOOM.md)
 
 ## Important notes
