@@ -24,6 +24,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt -qq -y update && \
     locales tmux screen libncurses5-dev \
     ## For building poky docs
     make xsltproc docbook-utils fop dblatex xmlto \
+    ## For building LTP
+    pkgconf autoconf automake \
     ## Install kas
     && pip3 install kas
 
