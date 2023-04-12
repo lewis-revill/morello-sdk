@@ -42,13 +42,29 @@ $ docker-compose up -d
 Create a `ltp.env` file in `ltp/workspace` as follows:
 
 ```
-export LTP_BUILD=/home/morello/workspace/build_purecap
-export LTP_INSTALL="$LTP_BUILD"/install
+export CC=clang
+export HOST_CFLAGS="-O2 -Wall"
+export HOST_LDFLAGS="-Wall"
+export CONFIGURE_OPT_EXTRA="--prefix=/ --host=aarch64-linux-gnu --disable-metadata --without-numa"
+
+export BUILD_DIR=/home/morello/workspace/build_purecap
+export LTP_INSTALL="$BUILD_DIR"/install
 
 export TARGET_FEATURE="-march=morello+c64"
 export TRIPLE=aarch64-linux-musl_purecap
 
-export KHDR_DIR=/morello/
+export KHDR_DIR=/morello/usr/include
+
+export CFLAGS="--target=${TRIPLE} ${TARGET_FEATURE} \
+        --sysroot=${MUSL_HOME} \
+        -isystem ${KHDR_DIR} -g -Wall"
+
+export LDFLAGS="--target=${TRIPLE} -rtlib=compiler-rt \
+        --sysroot=${MUSL_HOME} \
+        -fuse-ld=lld -static -L${BUILD_DIR}/lib"
+
+export MAKE_OPTS="TST_NEWER_64_SYSCALL=no TST_COMPAT_16_SYSCALL=no"
+export TARGETS="pan tools/apicmds testcases/kernel/syscalls"
 ```
 
 To enter into the container, run the command:
@@ -62,23 +78,6 @@ Inside the container, run the commands:
 cd ltp
 source /morello/env/morello-pcuabi-env
 source ../ltp.env
-
-# This can be turned into a script as-is.
-
-CFLAGS="--target=${TRIPLE} ${TARGET_FEATURE} --sysroot=${MUSL_HOME} \
-        -isystem ${KHDR_DIR}/usr/include -g -Wall"
-
-LDFLAGS="--target=${TRIPLE} -rtlib=compiler-rt --sysroot=${MUSL_HOME} \
-        -fuse-ld=lld -static -L${LTP_BUILD}/lib"
-
-export CC=clang
-export HOST_CFLAGS="-O2 -Wall"
-export HOST_LDFLAGS="-Wall"
-export CONFIGURE_OPT_EXTRA="--prefix=/ --host=aarch64-linux-gnu --disable-metadata --without-numa"
-
-MAKE_OPTS="TST_NEWER_64_SYSCALL=no TST_COMPAT_16_SYSCALL=no" \
-TARGETS="pan tools/apicmds testcases/kernel/syscalls" BUILD_DIR="$LTP_BUILD" \
-CFLAGS="$CFLAGS" LDFLAGS="$LDFLAGS" \
 ./build.sh -t cross -o out -ip "${LTP_INSTALL}"
 ```
 
@@ -86,7 +85,7 @@ The build output will be in `ltp/workspace/build_purecap/install`.
 
 Have a lot of fun!
 
-**Note (1):** Once you started the docker container the files of your project are accessible at `/home/morello/workspace/ltp`.
+**Note (1):** Once you started the docker container the files of your project are accessible at `/home/morello/workspace/ltp`.  
 **Note (2):** This will build LTP in purecap only.
 
 For further information please refer to the [Docker](https://docs.docker.com/) documentation.
