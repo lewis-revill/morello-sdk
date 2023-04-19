@@ -2,7 +2,7 @@
 
 # SPDX-License-Identifier: BSD-3-Clause
 
-source ./env/morello-pcuabi-env-versions
+source ./env/morello-sdk-versions
 
 CURR_DIR=$(pwd)
 

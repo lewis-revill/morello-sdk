@@ -1,9 +1,9 @@
 # Docker composer file for Morello Linux
 version: '3.8'
 services:
-  <project>-morello-pcuabi-env:
-    image: "git.morello-project.org:5050/morello/morello-pcuabi-env/morello-pcuabi-env:latest"
-    container_name: "<project>-morello-pcuabi-env"
+  <project>-morello-sdk:
+    image: "git.morello-project.org:5050/morello/morello-sdk/morello-sdk:latest"
+    container_name: "<project>-morello-sdk"
     volumes:
       - ./workspace:/home/morello/workspace
     tty: true
