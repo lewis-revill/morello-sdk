@@ -1,0 +1,21 @@
+[submodule "morello/llvm"]
+	path = morello/llvm
+	url = https://git.morello-project.org/morello/llvm-project-releases.git
+[submodule "morello/llvm-project"]
+	path = morello/llvm-project
+	url = https://git.morello-project.org/morello/llvm-project.git
+[submodule "morello/musl"]
+	path = morello/musl
+	url = https://git.morello-project.org/morello/musl-libc.git
+[submodule "morello/projects/bsp/grub"]
+	path = morello/projects/bsp/grub
+	url = https://git.savannah.gnu.org/git/grub
+[submodule "morello/projects/linux"]
+	path = morello/projects/linux
+	url = https://git.morello-project.org/morello/kernel/linux.git
+[submodule "morello/projects/morello-linux-headers"]
+	path = morello/projects/morello-linux-headers
+	url = https://git.morello-project.org/morello/morello-linux-headers.git
+[submodule "morello/projects/morello-busybox"]
+	path = morello/projects/morello-busybox
+	url = https://git.morello-project.org/morello/morello-busybox.git

@@ -1,0 +1,17 @@
+/morello/bin/
+/morello/musl-bin/
+/morello/compiler_rt-bin/
+/morello/examples/bin/
+/morello/morello-rootfs/
+/morello/gcc/
+/morello/.llvm-env
+/morello/.firmware-env
+/morello/.gcc-toolchain
+/morello/.linux-env
+/morello/.linux-headers-env
+/morello/.busybox-env
+/morello/morello-docker/
+/morello/linux-out/
+/morello/bsp/
+/morello/projects/buildroot/
+/morello/projects/musl-utils/
