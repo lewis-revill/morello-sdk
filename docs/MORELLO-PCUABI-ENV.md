@@ -17,8 +17,8 @@ If cross compiling on x86 you also need:
 ## Building
 ### Quick build:
 ```
-$ cd morello-pcuabi-env/morello
-$ source ./env/morello-pcuabi-env
+$ cd morello-sdk/morello
+$ source ./env/morello-sdk
 $ ./scripts/build-all.sh [options]
 ```
 Which will perform a full cross build on aarch64 host. You can optionally pass `--x86_64` to `build-all.sh` to do a cross-build from an x86_64 host.
@@ -45,17 +45,17 @@ OPTIONS:
   --help              this help message
 ```
 
-On success, your binary is `morello-pcuabi-env/morello/examples/bin/main`.
+On success, your binary is `morello-sdk/morello/examples/bin/main`.
 
 Note: To reset the environment to the default configuration execute:
 ```
-$ source ./env/morello-pcuabi-env-restore
+$ source ./env/morello-sdk-restore
 ```
 
 ### Step by step build explanation
-In `morello-pcuabi-env/morello`:
+In `morello-sdk/morello`:
 
-1. `env/morello-pcuabi-env`: set up $PATH for the Morello toolchain  
+1. `env/morello-sdk`: set up $PATH for the Morello toolchain  
 Sourcing this sets up $PATH such that the Morello supporting LLVM overshadows the system one (since not upstreamed yet).  
 **Required for steps 4 to 6**  
 

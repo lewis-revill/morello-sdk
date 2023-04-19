@@ -1,6 +1,6 @@
-# Build the morello-doom for morello using morello-pcuabi-env
+# Build the morello-doom for morello using morello-sdk
 
-This document covers the steps to build the [morello-doom](https://github.com/fvincenzo/morello-doom) for morello using morello-pcuabi-env.
+This document covers the steps to build the [morello-doom](https://github.com/fvincenzo/morello-doom) for morello using morello-sdk.
 
 ## Usage
 
@@ -19,9 +19,9 @@ Create a `docker-compose.yml` file and map the morello directory into `morello-d
 # Docker composer file for Morello morello-doom
 version: '3.8'
 services:
-  morello-doom-morello-pcuabi-env:
-    image: "git.morello-project.org:5050/morello/morello-pcuabi-env/morello-pcuabi-env:latest"
-    container_name: "morello-doom-morello-pcuabi-env"
+  morello-doom-morello-sdk:
+    image: "git.morello-project.org:5050/morello/morello-sdk/morello-sdk:latest"
+    container_name: "morello-doom-morello-sdk"
     volumes:
       - ./workspace:/home/morello/workspace
     tty: true
@@ -51,13 +51,13 @@ export SYS_HEADERS=/morello/usr/include/
 To enter into the container, run the command:
 
 ```
-$ docker exec -it -u morello morello-doom-morello-pcuabi-env /bin/bash
+$ docker exec -it -u morello morello-doom-morello-sdk /bin/bash
 ```
 
 Inside the container, run the commands:
 ```
 cd morello-doom/doom
-source /morello/env/morello-pcuabi-env
+source /morello/env/morello-sdk
 source ../../morello-doom.env
 make
 ```

@@ -1,6 +1,6 @@
-# Build the linux kernel for morello using morello-pcuabi-env
+# Build the linux kernel for morello using morello-sdk
 
-This document covers the steps to build the [linux kernel](https://git.morello-project.org/morello/kernel/linux) for morello using morello-pcuabi-env.
+This document covers the steps to build the [linux kernel](https://git.morello-project.org/morello/kernel/linux) for morello using morello-sdk.
 
 ## Usage
 
@@ -19,9 +19,9 @@ Create a `docker-compose.yml` file and map the morello directory into `linux/` a
 # Docker composer file for Morello Linux
 version: '3.8'
 services:
-  linux-morello-pcuabi-env:
-    image: "git.morello-project.org:5050/morello/morello-pcuabi-env/morello-pcuabi-env:latest"
-    container_name: "linux-morello-pcuabi-env"
+  linux-morello-sdk:
+    image: "git.morello-project.org:5050/morello/morello-sdk/morello-sdk:latest"
+    container_name: "linux-morello-sdk"
     volumes:
       - ./workspace:/home/morello/workspace
     tty: true
@@ -52,13 +52,13 @@ export KBUILD_OUTPUT=../linux-out
 To enter into the container, run the command:
 
 ```
-$ docker exec -it -u morello linux-morello-pcuabi-env /bin/bash
+$ docker exec -it -u morello linux-morello-sdk /bin/bash
 ```
 
 Inside the container, run the commands:
 ```
 cd linux
-source /morello/env/morello-pcuabi-env
+source /morello/env/morello-sdk
 source ../linux.env
 make mrproper && make morello_transitional_pcuabi_defconfig && make
 ```

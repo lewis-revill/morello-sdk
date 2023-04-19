@@ -1,6 +1,6 @@
-# Build the Linux Test Project (LTP) for morello using morello-pcuabi-env
+# Build the Linux Test Project (LTP) for morello using morello-sdk
 
-This document covers the steps to build the [Linux Test Project](https://git.morello-project.org/morello/morello-linux-ltp) for morello using morello-pcuabi-env.
+This document covers the steps to build the [Linux Test Project](https://git.morello-project.org/morello/morello-linux-ltp) for morello using morello-sdk.
 
 ## Usage
 
@@ -19,9 +19,9 @@ Create a `docker-compose.yml` file in `ltp/` as follows:
 # Docker composer file for Morello LTP
 version: '3.8'
 services:
-  ltp-morello-pcuabi-env:
-    image: "git.morello-project.org:5050/morello/morello-pcuabi-env/morello-pcuabi-env:latest"
-    container_name: "ltp-morello-pcuabi-env"
+  ltp-morello-sdk:
+    image: "git.morello-project.org:5050/morello/morello-sdk/morello-sdk:latest"
+    container_name: "ltp-morello-sdk"
     volumes:
       - ./workspace:/home/morello/workspace
     tty: true
@@ -70,13 +70,13 @@ export TARGETS="pan tools/apicmds testcases/kernel/syscalls"
 To enter into the container, run the command:
 
 ```
-$ docker exec -it -u morello ltp-morello-pcuabi-env /bin/bash
+$ docker exec -it -u morello ltp-morello-sdk /bin/bash
 ```
 
 Inside the container, run the commands:
 ```
 cd ltp
-source /morello/env/morello-pcuabi-env
+source /morello/env/morello-sdk
 source ../ltp.env
 ./build.sh -t cross -o out -ip "${LTP_INSTALL}"
 ```

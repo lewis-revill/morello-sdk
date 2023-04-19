@@ -1,6 +1,6 @@
 # Introduction
 
-## Docker image for morello-pcuabi-env based on Debian.
+## Docker image for morello-sdk based on Debian.
 
 This page contains some simple instructions to get you started on Morello. In less than 10 minutes you should be able to setup a docker container with everything you need to build an application for Morello.
 
@@ -14,7 +14,7 @@ The development kit includes includes:
 
 **Note:** This approach requires a Morello Board to deploy the final application.
 
-If you want to replicate the development environment directly on your system without using docker please follow the instructions at [morello-pcuabi-env setup](docs/MORELLO-PCUABI-ENV.md) and use the **morello/mainline** branch of this project.
+If you want to replicate the development environment directly on your system without using docker please follow the instructions at [morello-sdk setup](docs/MORELLO-PCUABI-ENV.md) and use the **morello/mainline** branch of this project.
 
 # Setup
 
@@ -60,9 +60,9 @@ Create a `docker-compose.yml` file and map the morello directory into `<project>
 # Docker composer file for Morello Linux
 version: '3.8'
 services:
-  <project>-morello-pcuabi-env:
-    image: "git.morello-project.org:5050/morello/morello-pcuabi-env/morello-pcuabi-env:latest"
-    container_name: "<project>-morello-pcuabi-env"
+  <project>-morello-sdk:
+    image: "git.morello-project.org:5050/morello/morello-sdk/morello-sdk:latest"
+    container_name: "<project>-morello-sdk"
     volumes:
       - ./workspace:/home/morello/workspace
     tty: true
@@ -75,7 +75,7 @@ cd <project>/workspace
 git clone <project-repo>
 ```
 
-**Note:** To create a simple helloworld project please refer to the relevant [section](#build-an-hello-world-application-using-morello-pcuabi-env-development-kit).
+**Note:** To create a simple helloworld project please refer to the relevant [section](#build-an-hello-world-application-using-morello-sdk-development-kit).
 
 Then, bring up the container (from `<project>/)`:
 ```
@@ -85,37 +85,37 @@ $ docker-compose up -d
 To enter into the container, run the command:
 
 ```
-$ docker exec -it -u morello <project>-morello-pcuabi-env /bin/bash
+$ docker exec -it -u morello <project>-morello-sdk /bin/bash
 ```
 
 Have a lot of fun!
 
 **Note:** Once you started the docker container the files of your project are accessible at `/home/morello/workspace/<project>`.
 
-## Cleanup the morello-pcuabi-env container
+## Cleanup the morello-sdk container
 
-**/!\ WARNING: execute this step only if there are no more `<project>s` using the morello-pcuabi-env container.**
+**/!\ WARNING: execute this step only if there are no more `<project>s` using the morello-sdk container.**
 
-To recover the space used by the `<project>-morello-pcuabi-env` container execute the following commands:
+To recover the space used by the `<project>-morello-sdk` container execute the following commands:
 
-**STEP 1:** Stop all the projects using morello-pcuabi-env container.
-
-```
-$ docker stop <project>-morello-pcuabi-env
-```
-
-**STEP 2:** Remove all the files belonging to the morello-pcuabi-env container.
+**STEP 1:** Stop all the projects using morello-sdk container.
 
 ```
-$ docker image rm git.morello-project.org:5050/morello/morello-pcuabi-env/morello-pcuabi-env:latest -f
+$ docker stop <project>-morello-sdk
+```
+
+**STEP 2:** Remove all the files belonging to the morello-sdk container.
+
+```
+$ docker image rm git.morello-project.org:5050/morello/morello-sdk/morello-sdk:latest -f
 $ docker image prune
 ```
 
 For further information please refer to the [Docker](https://docs.docker.com/) documentation.
 
-# Build a hello world application using morello-pcuabi-env development kit
+# Build a hello world application using morello-sdk development kit
 
-To write and build a hello world application please make sure you started the morello-pcuabi-env container following the instructions listed above.  
+To write and build a hello world application please make sure you started the morello-sdk container following the instructions listed above.  
 Once the container is started, if everything went well, you should be welcomed by the prompt:
 ```
 morello@<container-id>:~/workspace$
@@ -174,7 +174,7 @@ int main()
 ```
 At this point you have everything you need. Source the development kit environment file:
 ```
-source /morello/env/morello-pcuabi-env
+source /morello/env/morello-sdk
 ``` 
 and run:
 ```
@@ -184,9 +184,9 @@ If everything went well your **helloworld** binary for morello should be waiting
 
 **Note:** the same binary will be accessible outside of the container at: `<project>/workspace/helloworld/bin`.  
 
-## Examples of projects that can be built via morello-pcuabi-env
+## Examples of projects that can be built via morello-sdk
 
-This section containt the instructions to build some projects via morello-pcuabi-env:
+This section containt the instructions to build some projects via morello-sdk:
 - [Linux Kernel](docs/LINUX-KERNEL.md)
 - [Musl libC](docs/MUSL-LIBC.md)
 - [Linux Test Project](docs/LTP.md)
@@ -194,7 +194,7 @@ This section containt the instructions to build some projects via morello-pcuabi
 
 ## Important notes
 
-**/morello/env/morello-pcuabi-env** exposes the following environment variables:
+**/morello/env/morello-sdk** exposes the following environment variables:
 ```
 MORELLO_HOME=/morello
 MUSL_HOME=/morello/musl
@@ -203,10 +203,10 @@ MUSL_HOME=/morello/musl
 **MORELLO_HOME** points to the root directory of the development kit.  
 **MUSL_HOME** points to the musl C library binaries.  
 The kernel headers are contained in **/morello/usr/include**.  
-**clang** compiler is in the path after sourcing **/morello/env/morello-pcuabi-env**.  
+**clang** compiler is in the path after sourcing **/morello/env/morello-sdk**.  
   
 Please make sure that the Makefile of the application you are trying to port to Morello using this development kit is compliant with these assumptions.
 
 # Container verification
 
-morello-pcuabi-env generated containers are signed using [cosign](https://github.com/sigstore/cosign). To verify the validity of a container before donwloading it please follow the information contained in the [.cosign](.cosign/README.md) directory.
+morello-sdk generated containers are signed using [cosign](https://github.com/sigstore/cosign). To verify the validity of a container before donwloading it please follow the information contained in the [.cosign](.cosign/README.md) directory.

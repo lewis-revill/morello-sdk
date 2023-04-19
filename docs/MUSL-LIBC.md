@@ -1,6 +1,6 @@
-# Build the musl libC for morello using morello-pcuabi-env
+# Build the musl libC for morello using morello-sdk
 
-This document covers the steps to build the [musl libC](https://git.morello-project.org/morello/musl-libc) for morello using morello-pcuabi-env.
+This document covers the steps to build the [musl libC](https://git.morello-project.org/morello/musl-libc) for morello using morello-sdk.
 
 ## Usage
 
@@ -19,9 +19,9 @@ Create a `docker-compose.yml` file and map the morello directory into `musl/` as
 # Docker composer file for Morello musl
 version: '3.8'
 services:
-  musl-morello-pcuabi-env:
-    image: "git.morello-project.org:5050/morello/morello-pcuabi-env/morello-pcuabi-env:latest"
-    container_name: "musl-morello-pcuabi-env"
+  musl-morello-sdk:
+    image: "git.morello-project.org:5050/morello/morello-sdk/morello-sdk:latest"
+    container_name: "musl-morello-sdk"
     volumes:
       - ./workspace:/home/morello/workspace
     tty: true
@@ -48,13 +48,13 @@ export MUSL_BIN=../musl-bin
 To enter into the container, run the command:
 
 ```
-$ docker exec -it -u morello musl-morello-pcuabi-env /bin/bash
+$ docker exec -it -u morello musl-morello-sdk /bin/bash
 ```
 
 Inside the container, run the commands:
 ```
 cd musl
-source /morello/env/morello-pcuabi-env
+source /morello/env/morello-sdk
 source ../musl.env
 CC=clang ./configure \
 		--enable-morello \
