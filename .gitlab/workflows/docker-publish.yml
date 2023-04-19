@@ -8,8 +8,8 @@ variables:
 
 before_script:
   - docker login -u ${CI_REGISTRY_USER} -p ${CI_REGISTRY_PASSWORD} ${CI_REGISTRY}
-  - export tag1="${CI_REGISTRY_IMAGE}/morello-pcuabi-env:latest"
-  - export tag2="${CI_REGISTRY_IMAGE}/morello-pcuabi-env:nightly"
+  - export tag1="${CI_REGISTRY_IMAGE}/morello-sdk:latest"
+  - export tag2="${CI_REGISTRY_IMAGE}/morello-sdk:nightly"
 
 build-and-push-amd64:
   stage: build
