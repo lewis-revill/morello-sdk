@@ -75,7 +75,7 @@ cd <project>/workspace
 git clone <project-repo>
 ```
 
-**Note:** To create a simple helloworld project please refer to the relevant [section](#build-an-hello-world-application-using-morello-sdk-development-kit).
+**Note:** To create a simple helloworld project please refer to the relevant [section](#build-a-hello-world-application-using-morello-sdk-development-kit).
 
 Then, bring up the container (from `<project>/)`:
 ```
