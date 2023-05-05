@@ -70,7 +70,7 @@ export TARGETS="pan tools/apicmds testcases/kernel/syscalls"
 To enter into the container, run the command:
 
 ```
-$ docker exec -it -u morello ltp-morello-sdk /bin/bash
+$ docker exec -it -u root ltp-morello-sdk /bin/bash
 ```
 
 Inside the container, run the commands:

@@ -48,7 +48,7 @@ export MUSL_BIN=../musl-bin
 To enter into the container, run the command:
 
 ```
-$ docker exec -it -u morello musl-morello-sdk /bin/bash
+$ docker exec -it -u root musl-morello-sdk /bin/bash
 ```
 
 Inside the container, run the commands:

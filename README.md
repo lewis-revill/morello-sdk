@@ -85,7 +85,7 @@ $ docker-compose up -d
 To enter into the container, run the command:
 
 ```
-$ docker exec -it -u morello <project>-morello-sdk /bin/bash
+$ docker exec -it -u root <project>-morello-sdk /bin/bash
 ```
 
 Have a lot of fun!

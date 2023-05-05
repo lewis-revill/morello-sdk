@@ -52,7 +52,7 @@ export KBUILD_OUTPUT=../linux-out
 To enter into the container, run the command:
 
 ```
-$ docker exec -it -u morello linux-morello-sdk /bin/bash
+$ docker exec -it -u root linux-morello-sdk /bin/bash
 ```
 
 Inside the container, run the commands:

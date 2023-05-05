@@ -51,7 +51,7 @@ export SYS_HEADERS=/morello/usr/include/
 To enter into the container, run the command:
 
 ```
-$ docker exec -it -u morello morello-doom-morello-sdk /bin/bash
+$ docker exec -it -u root morello-doom-morello-sdk /bin/bash
 ```
 
 Inside the container, run the commands:
