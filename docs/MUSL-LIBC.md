@@ -42,7 +42,7 @@ $ docker-compose up -d
 Create a `musl.env` file and map the morello directory into `musl/workspace` as follows:
 
 ```
-export MUSL_BIN=../musl-bin
+export MUSL_BIN=$(pwd)/../musl-bin
 ```
 
 To enter into the container, run the command:
