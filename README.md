@@ -18,12 +18,18 @@ If you want to replicate the development environment directly on your system wit
 
 # Setup
 
-Install docker:
+## Install docker
 ```
 $ curl -sSL https://get.docker.com | sh
 ```
 
-Install docker-compose:
+**Note:** This guide requires to run docker as a non-root user. After the completion of the command above execute:
+```
+$ dockerd-rootless-setuptool.sh install
+```
+and follow the instructions on screen. For further information please refer to the [Docker](https://docs.docker.com/) documentation.
+
+## Install docker-compose
 
 Latest: v2.17.2
 
@@ -41,7 +47,6 @@ Test docker-compose:
 ```
 $ docker-compose --version
 ```
-
 # Usage
 
 Create the following workspace structure:
