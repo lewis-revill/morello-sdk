@@ -17,7 +17,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt -qq -y update && \
     gawk wget git-core diffstat unzip texinfo libtinfo5 \
     build-essential chrpath socat cpio python3 python3-pip python3-pexpect \
     xz-utils debianutils iputils-ping python3-git python3-jinja2 libegl1-mesa libsdl1.2-dev \
-    pylint3 xterm vim telnet rsync \
+    pylint3 xterm vim telnet rsync cmake \
     ## Build kernel
     bc bison flex device-tree-compiler \
     ## Extra pkg
