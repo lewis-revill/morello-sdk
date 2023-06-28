@@ -19,3 +19,6 @@
 [submodule "morello/projects/morello-busybox"]
 	path = morello/projects/morello-busybox
 	url = https://git.morello-project.org/morello/morello-busybox.git
+[submodule "morello/gnu"]
+	path = morello/gnu
+	url = https://git.morello-project.org/morello/gnu-toolchain/releases.git

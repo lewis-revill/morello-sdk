@@ -27,6 +27,10 @@ copy_morello_toolchain() {
 	fi
 }
 
+copy_gnu_toolchain() {
+	cp -Rf ${MORELLO_AARCH64_HOME}/gnu/${OPTIONS_MODE}-aarch64-none-linux-gnu ${MORELLO_HOME}/gnu
+}
+
 create_morello_env() {
 	cp -Rf ${MORELLO_AARCH64_HOME}/env/morello-sdk.template ${MORELLO_HOME}/env/morello-sdk
 }
@@ -46,6 +50,8 @@ morello_install() {
 	create_morello_structure
 
 	copy_morello_toolchain
+
+	copy_gnu_toolchain
 
 	create_morello_env
 
