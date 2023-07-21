@@ -40,11 +40,6 @@ cleanup_morello_env() {
 }
 
 morello_install() {
-	if [ "$EUID" -ne 0 ]; then
-		echo "[DO NOT USE --install OPTION OUTSIDE OF A CONTAINER]"
-		exit
-	fi
-
 	clean_morello_structure
 
 	create_morello_structure

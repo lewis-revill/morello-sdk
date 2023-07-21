@@ -15,7 +15,7 @@ COMPILER_RT_BIN="${MORELLO_AARCH64_HOME}/compiler_rt-bin"
 MORELLO_ROOTFS="${MORELLO_AARCH64_HOME}/morello-rootfs"
 MORELLO_TESTING="${MORELLO_ROOTFS}/testing"
 MORELLO_DOCKER="${MORELLO_AARCH64_HOME}/morello-docker"
-MORELLO_HOME="/morello"
+MORELLO_HOME="${HOME}/morello"
 
 if [ -f "/proc/cpuinfo" ]; then
 	NCORES=$(grep -c ^processor /proc/cpuinfo)
@@ -130,15 +130,19 @@ main () {
 	echo "RootFS: ${MORELLO_ROOTFS}"
 	echo "Testing: ${MORELLO_TESTING}"
 
+    export PATH=${MORELLO_AARCH64_HOME}/bin:$PATH
+
 	# Create required directories
 	mkdir -p ${MORELLO_ROOTFS} && mkdir -p ${MORELLO_TESTING} && mkdir -p ${GCC_HOME}
 
 	# Configure LLVM and musl for Morello
 	${MORELLO_AARCH64_HOME}/scripts/configure-llvm-musl.sh
 
+    export PATH=${MORELLO_AARCH64_HOME}/llvm/bin:$PATH
+
 	# Configure GNU Toolchain
 	${MORELLO_AARCH64_HOME}/scripts/configure-gnu-toolchain.sh
-	
+
 	# Configure linux headers
 	${MORELLO_AARCH64_HOME}/scripts/configure-linux-headers.sh
 

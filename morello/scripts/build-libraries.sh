@@ -7,6 +7,8 @@ libraries_clean() {
 }
 
 libraries_build() {
+    PATH=${MORELLO_AARCH64_HOME}/llvm/bin:$PATH
+
 	local CLANG_RESOURCE_DIR=$(clang -print-resource-dir)
 	local LLVM_PROJECT=llvm-project
 

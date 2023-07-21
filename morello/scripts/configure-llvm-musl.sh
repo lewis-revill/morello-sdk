@@ -47,7 +47,7 @@ if [ ! -f "${CURR_DIR}/.llvm-env" ]; then
 		git submodule update --remote --merge $i
 	done
 
-	if [ "$BUILD_LIB" = "on" ]; then
+	if [ "$OPTIONS_BUILD_LIB" = "on" ]; then
 		for i in "${PROJECTS_SOURCE[@]}"
 		do
 			echo "$i updating progress..."
@@ -66,7 +66,8 @@ git remote set-branches origin $BRANCH && \
 git fetch --depth 1 origin $BRANCH && \
 git checkout $BRANCH
 
-if [ "$BUILD_LIB" = "on" ]; then
+
+if [ "$OPTIONS_BUILD_LIB" = "on" ]; then
 	# Config Clang sources to build compiler-rt for Morello
 	cd ${CURR_DIR}/llvm-project
 	git checkout morello/release-$MORELLO_COMPILER_SOURCE_VERSION
