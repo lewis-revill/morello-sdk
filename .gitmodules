@@ -3,7 +3,8 @@
 	url = https://git.morello-project.org/morello/llvm-project-releases.git
 [submodule "morello/llvm-project"]
 	path = morello/llvm-project
-	url = https://git.morello-project.org/morello/llvm-project.git
+	url = https://github.com/lewis-revill/llvm-project-cheri.git
+	branch = ljr-morello-sdk
 [submodule "morello/musl"]
 	path = morello/musl
 	url = https://git.morello-project.org/morello/musl-libc.git
